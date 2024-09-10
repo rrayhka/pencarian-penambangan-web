@@ -37,8 +37,6 @@ nbclient.exceptions.CellTimeoutError: A cell timed out while it was being execut
 The message was: Cell execution timed out.
 Here is a preview of the cell contents:
 -------------------
-["payload = {'tipe': 'artikel'}", '', 'for news, category in zip(base_urls, categories):', '    for page in range(1, 11):  # Mengambil dari halaman 1 hingga 10', '        url = f"{news}{page}"']
-...
-['                    kategori_list.append(kategori)', '                else:', '                    print(f"Error: {article_response.status_code}")', '        else:', '            print(f"Error : {response.status_code}")']
+df["cleansing"] = df["judul"].apply(clean_and_process_text)
 -------------------
 
