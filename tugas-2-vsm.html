@@ -473,7 +473,7 @@ document.write(`
 </section>
 <section id="tf-idf">
 <h3>TF-IDF<a class="headerlink" href="#tf-idf" title="Link to this heading">#</a></h3>
-<p>Term Frequency adalah jumlah kemunculan suatu istilah dalam satu dokumen saja, sedangkan Document Frequency adalah jumlah dokumen terpisah tempat istilah tersebut muncul. Namun, frekuensi ini bergantung pada seluruh korpus. IDF merupakan jumlah dokumen dalam korpus yang dipisahkan oleh frekuensi teks. Dengan kata lain, IDF mengukur seberapa umum atau langka suatu kata dalam seluruh koleksi dokumen.</p>
+<p>Term Frequency adalah jumlah kemunculan suatu term dalam satu dokumen saja, sedangkan Document Frequency adalah jumlah dokumen terpisah tempat istilah tersebut muncul. Namun, frekuensi ini bergantung pada seluruh korpus. IDF merupakan jumlah dokumen dalam korpus yang dipisahkan oleh frekuensi teks. Dengan kata lain, IDF mengukur seberapa umum atau langka suatu kata dalam seluruh koleksi dokumen.</p>
 <div class="math notranslate nohighlight">
 \[
     idf(t) = \frac{N}{df(t)}=\frac{N}{N(t)}
@@ -498,12 +498,11 @@ document.write(`
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import library yang dibutuhkan </span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">tqdm</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">nltk</span>
 <span class="kn">from</span> <span class="nn">Sastrawi.Stemmer.StemmerFactory</span> <span class="kn">import</span> <span class="n">StemmerFactory</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfTransformer</span>
-<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span><span class="p">,</span> <span class="n">CountVectorizer</span>
 <span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
 <span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
 </pre></div>
@@ -597,8 +596,8 @@ document.write(`
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hanya memilih kolom judul dan kategori</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;judul&#39;</span><span class="p">,</span> <span class="s1">&#39;kategori&#39;</span><span class="p">]]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hanya memilih kolom judul, isi, dan kategori</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;judul&#39;</span><span class="p">,</span> <span class="s1">&#39;isi&#39;</span><span class="p">,</span><span class="s1">&#39;kategori&#39;</span><span class="p">]]</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -623,6 +622,7 @@ document.write(`
     <tr style="text-align: right;">
       <th></th>
       <th>judul</th>
+      <th>isi</th>
       <th>kategori</th>
     </tr>
   </thead>
@@ -630,26 +630,31 @@ document.write(`
     <tr>
       <th>0</th>
       <td>Bukan Kaleng-kaleng! Nilai Skuad Timnas Indone...</td>
+      <td>Jakarta, CNBC Indonesia -Kedatangan pemain-pem...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Aset Bank Mandiri Tembus Rp 2.200 T, Paling Ju...</td>
+      <td>Jakarta, CNBC Indonesia -Sepanjang paruh perta...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Emas Meredup Saat Suku Bunga The Fed Mau Turun...</td>
+      <td>Jakarta,CNBC Indonesia -Harga emas dunia melem...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Tetangga RI Dihantam 'Bencana' Iklim, Harga Ba...</td>
+      <td>Jakarta, CNBC Indonesia -Indeks Harga Konsumen...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Tantama Hingga Perwira, Ini Urutan Lengkap Pan...</td>
+      <td>Jakarta, CNBC Indonesia-Tentara Nasional Indon...</td>
       <td>Research</td>
     </tr>
   </tbody>
@@ -682,13 +687,14 @@ document.write(`
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
 RangeIndex: 100 entries, 0 to 99
-Data columns (total 2 columns):
+Data columns (total 3 columns):
  #   Column    Non-Null Count  Dtype 
 ---  ------    --------------  ----- 
  0   judul     100 non-null    object
- 1   kategori  100 non-null    object
-dtypes: object(2)
-memory usage: 1.7+ KB
+ 1   isi       100 non-null    object
+ 2   kategori  100 non-null    object
+dtypes: object(3)
+memory usage: 2.5+ KB
 </pre></div>
 </div>
 </div>
@@ -719,6 +725,7 @@ memory usage: 1.7+ KB
     <tr style="text-align: right;">
       <th></th>
       <th>judul</th>
+      <th>isi</th>
       <th>kategori</th>
     </tr>
   </thead>
@@ -726,26 +733,31 @@ memory usage: 1.7+ KB
     <tr>
       <th>0</th>
       <td>Bukan Kaleng-kaleng! Nilai Skuad Timnas Indone...</td>
+      <td>Jakarta, CNBC Indonesia -Kedatangan pemain-pem...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Aset Bank Mandiri Tembus Rp 2.200 T, Paling Ju...</td>
+      <td>Jakarta, CNBC Indonesia -Sepanjang paruh perta...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Emas Meredup Saat Suku Bunga The Fed Mau Turun...</td>
+      <td>Jakarta,CNBC Indonesia -Harga emas dunia melem...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Tetangga RI Dihantam 'Bencana' Iklim, Harga Ba...</td>
+      <td>Jakarta, CNBC Indonesia -Indeks Harga Konsumen...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Tantama Hingga Perwira, Ini Urutan Lengkap Pan...</td>
+      <td>Jakarta, CNBC Indonesia-Tentara Nasional Indon...</td>
       <td>Research</td>
     </tr>
   </tbody>
@@ -766,33 +778,18 @@ memory usage: 1.7+ KB
 - Mengubah teks menjadi huruf kecil agar seragam dalam pengolahan, terutama dalam analisis berbasis kata.
 - Menghapus karakter non-ASCII untuk menghindari simbol atau karakter yang tidak dikenal di encoding ASCII.
 - Menghapus karakter tambahan non-ASCII yang mungkin masih tersisa di dalam teks.
-- Menghapus baris baru (‘\n’) agar hasilnya berupa satu baris teks yang konsisten.</p>
-<ol class="arabic simple" start="2">
-<li><p><strong>Stemming</strong>:</p>
-<ul class="simple">
-<li><p>Menggunakan library <code class="docutils literal notranslate"><span class="pre">Sastrawi</span></code> untuk stemming teks bahasa Indonesia. Stemming adalah proses mengubah kata-kata menjadi bentuk dasar (akar kata),
+- Menghapus baris baru (‘\n’) agar hasilnya berupa satu baris teks yang konsisten.</p></li>
+<li><p><strong>Stemming</strong>:
+- Menggunakan library <code class="docutils literal notranslate"><span class="pre">Sastrawi</span></code> untuk stemming teks bahasa Indonesia. Stemming adalah proses mengubah kata-kata menjadi bentuk dasar (akar kata),
 sehingga kata yang beragam seperti “makan”, “memakan”, “dimakan” semuanya diproses menjadi “makan”.</p></li>
-</ul>
-</li>
-<li><p><strong>Tokenisasi</strong>:</p>
-<ul class="simple">
-<li><p>Memecah teks yang sudah dibersihkan dan distemming menjadi token (kata-kata individu), yang dapat diolah lebih lanjut.</p></li>
-</ul>
-</li>
-<li><p><strong>Filtering Stopwords</strong>:</p>
-<ul class="simple">
-<li><p>Menghapus stopwords (kata-kata umum yang tidak penting dalam analisis teks seperti “yang”, “dan”, “di”) menggunakan daftar stopwords dari
+<li><p><strong>Tokenisasi</strong>:
+- Memecah teks yang sudah dibersihkan dan distemming menjadi token (kata-kata individu), yang dapat diolah lebih lanjut.</p></li>
+<li><p><strong>Filtering Stopwords</strong>:
+- Menghapus stopwords (kata-kata umum yang tidak penting dalam analisis teks seperti “yang”, “dan”, “di”) menggunakan daftar stopwords dari
 bahasa Indonesia yang disediakan oleh NLTK. Ini bertujuan agar hanya kata-kata penting yang dipertahankan dalam teks.</p></li>
-</ul>
-</li>
-<li><p><strong>Penggabungan Kembali</strong>:</p>
-<ul class="simple">
-<li><p>Setelah proses tokenisasi dan filtering stopwords, token yang tersisa digabung kembali menjadi satu string teks yang siap digunakan
+<li><p><strong>Penggabungan Kembali</strong>:
+- Setelah proses tokenisasi dan filtering stopwords, token yang tersisa digabung kembali menjadi satu string teks yang siap digunakan
 dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis vektor.</p></li>
-</ul>
-</li>
-</ol>
-</li>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -822,7 +819,7 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
     <span class="n">filtered_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">tokens</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_words</span><span class="p">]</span>
 
     <span class="c1"># Gabungkan kembali kata-kata yang sudah difilter menjadi teks</span>
-    <span class="n">processed_text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered_words</span><span class="p">)</span>
+    <span class="n">processed_text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">tqdm</span><span class="p">(</span><span class="n">filtered_words</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Menggabungkan kata&quot;</span><span class="p">))</span>
     
     <span class="k">return</span> <span class="n">processed_text</span>
 </pre></div>
@@ -836,6 +833,1185 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 8/8 [00:00&lt;00:00, 7992.96it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 8/8 [00:00&lt;00:00, 8029.30it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 6/6 [00:00&lt;00:00, 6011.90it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 10/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 8/8 [00:00&lt;00:00, 7941.88it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 9/9 [00:00&lt;00:00, 9041.61it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/11 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 11/11 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 8/8 [00:00&lt;00:00, 8017.79it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 10/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 10/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 8/8 [00:00&lt;00:00, 8004.40it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 9/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 9/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 10/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 6/6 [00:00&lt;00:00, 5997.57it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 8/8 [00:00&lt;00:00, 7943.76it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 6/6 [00:00&lt;00:00, 6003.30it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 7/7 [00:00&lt;00:00, 6998.84it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/4 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 4/4 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 10/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 9/9 [00:00&lt;00:00, 9063.32it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 9/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/11 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 11/11 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 6/6 [00:00&lt;00:00, 6084.58it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/3 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 3/3 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 7/7 [00:00&lt;00:00, 6993.84it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 6/6 [00:00&lt;00:00, 5971.96it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 9/9 [00:00&lt;00:00, 8996.36it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/11 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 11/11 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 9/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 10/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 9/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 8/8 [00:00&lt;00:00, 7960.72it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 9/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 9/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 8/8 [00:00&lt;00:00, 7953.17it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 9/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 7/7 [00:00&lt;00:00, 7047.56it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 8/8 [00:00&lt;00:00, 8023.54it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████| 7/7 [00:00&lt;00:00, 7008.86it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 5/5 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 9/9 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 8/8 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 6/6 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/11 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 11/11 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                       | 0/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|██████████████████████████████████████████████████████████████████████| 10/10 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata:   0%|                                                                        | 0/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menggabungkan kata: 100%|████████████████████████████████████████████████████████████████████████| 7/7 [00:00&lt;?, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
@@ -937,12 +2113,17 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
 <span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="c1">#step 6</span>
 <span class="g g-Whitespace">     </span><span class="mi">40</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
 
-<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\Sastrawi\Stemmer\Context\Context.py:80,</span> in <span class="ni">Context.start_stemming_process</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">     </span><span class="mi">77</span>     <span class="k">return</span>
-<span class="g g-Whitespace">     </span><span class="mi">79</span> <span class="c1">#step 4, 5</span>
-<span class="ne">---&gt; </span><span class="mi">80</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_prefixes</span><span class="p">()</span>
-<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\Sastrawi\Stemmer\Context\Context.py:85,</span> in <span class="ni">Context.start_stemming_process</span><span class="nt">(self)</span>
 <span class="g g-Whitespace">     </span><span class="mi">82</span>     <span class="k">return</span>
+<span class="g g-Whitespace">     </span><span class="mi">84</span> <span class="c1">#ECS loop pengembalian akhiran</span>
+<span class="ne">---&gt; </span><span class="mi">85</span> <span class="bp">self</span><span class="o">.</span><span class="n">loop_pengembalian_akhiran</span><span class="p">()</span>
+
+<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\Sastrawi\Stemmer\Context\Context.py:141,</span> in <span class="ni">Context.loop_pengembalian_akhiran</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">    </span><span class="mi">138</span>     <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span> <span class="o">=</span> <span class="n">removal</span><span class="o">.</span><span class="n">get_subject</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">140</span> <span class="c1">#step 4,5</span>
+<span class="ne">--&gt; </span><span class="mi">141</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_prefixes</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">142</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">143</span>     <span class="k">return</span>
 
 <span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\Sastrawi\Stemmer\Context\Context.py:89,</span> in <span class="ni">Context.remove_prefixes</span><span class="nt">(self)</span>
 <span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">def</span> <span class="nf">remove_prefixes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -951,19 +2132,34 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
 <span class="g g-Whitespace">     </span><span class="mi">90</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
 <span class="g g-Whitespace">     </span><span class="mi">91</span>             <span class="k">return</span>
 
-<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\Sastrawi\Stemmer\Context\Context.py:111,</span> in <span class="ni">Context.accept_prefix_visitors</span><span class="nt">(self, visitors)</span>
+<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\Sastrawi\Stemmer\Context\Context.py:110,</span> in <span class="ni">Context.accept_prefix_visitors</span><span class="nt">(self, visitors)</span>
+<span class="g g-Whitespace">    </span><span class="mi">108</span> <span class="n">removalCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removals</span><span class="p">)</span>
 <span class="g g-Whitespace">    </span><span class="mi">109</span> <span class="k">for</span> <span class="n">visitor</span> <span class="ow">in</span> <span class="n">visitors</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">110</span>     <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">visitor</span><span class="p">)</span>
-<span class="ne">--&gt; </span><span class="mi">111</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">110</span>     <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">visitor</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">111</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
 <span class="g g-Whitespace">    </span><span class="mi">112</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span>
-<span class="g g-Whitespace">    </span><span class="mi">113</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_is_stopped</span><span class="p">:</span>
 
-<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\Sastrawi\Dictionary\ArrayDictionary.py:9,</span> in <span class="ni">ArrayDictionary.contains</span><span class="nt">(self, word)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="k">if</span> <span class="n">words</span><span class="p">:</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span>         <span class="bp">self</span><span class="o">.</span><span class="n">add_words</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">9</span> <span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="k">return</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">words</span>
-<span class="g g-Whitespace">     </span><span class="mi">12</span> <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\Sastrawi\Stemmer\Context\Context.py:97,</span> in <span class="ni">Context.accept</span><span class="nt">(self, visitor)</span>
+<span class="g g-Whitespace">     </span><span class="mi">96</span> <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitor</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">97</span>     <span class="n">visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\Sastrawi\Stemmer\Context\Visitor\AbstractDisambiguatePrefixRule.py:14,</span> in <span class="ni">AbstractDisambiguatePrefixRule.visit</span><span class="nt">(self, context)</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="k">for</span> <span class="n">disambiguator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">disambiguators</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">14</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">disambiguator</span><span class="o">.</span><span class="n">disambiguate</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>         <span class="k">break</span>
+
+<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\Sastrawi\Morphology\Disambiguator\DisambiguatorPrefixRule39.py:21,</span> in <span class="ni">DisambiguatorPrefixRule39b.disambiguate</span><span class="nt">(self, word)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="k">class</span> <span class="nc">DisambiguatorPrefixRule39b</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Disambiguate Prefix Rule 39b (CC infix rules)</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span><span class="sd">     Rule 39b : CemV -&gt; CV</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">21</span>     <span class="k">def</span> <span class="nf">disambiguate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span><span class="w">         </span><span class="sd">&quot;&quot;&quot;Disambiguate Prefix Rule 39b (CC infix rules)</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span><span class="sd">         Rule 39b : CemV -&gt; CV</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span><span class="sd">         &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span>         <span class="n">matches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^([bcdfghjklmnpqrstvwxyz])em([aiueo])(.*)$&#39;</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
@@ -996,6 +2192,7 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
     <tr style="text-align: right;">
       <th></th>
       <th>judul</th>
+      <th>isi</th>
       <th>kategori</th>
       <th>cleansing</th>
     </tr>
@@ -1004,30 +2201,35 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
     <tr>
       <th>0</th>
       <td>Bukan Kaleng-kaleng! Nilai Skuad Timnas Indone...</td>
+      <td>Jakarta, CNBC Indonesia -Kedatangan pemain-pem...</td>
       <td>Research</td>
       <td>kaleng kaleng nilai skuad timnas indonesia mew...</td>
     </tr>
     <tr>
       <th>1</th>
       <td>Aset Bank Mandiri Tembus Rp 2.200 T, Paling Ju...</td>
+      <td>Jakarta, CNBC Indonesia -Sepanjang paruh perta...</td>
       <td>Research</td>
       <td>aset bank mandiri tembus rp t jumbo indonesia</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Emas Meredup Saat Suku Bunga The Fed Mau Turun...</td>
+      <td>Jakarta,CNBC Indonesia -Harga emas dunia melem...</td>
       <td>Research</td>
       <td>emas redup suku bunga the fed turun</td>
     </tr>
     <tr>
       <th>3</th>
       <td>Tetangga RI Dihantam 'Bencana' Iklim, Harga Ba...</td>
+      <td>Jakarta, CNBC Indonesia -Indeks Harga Konsumen...</td>
       <td>Research</td>
       <td>tetangga ri hantam bencana iklim harga barang ...</td>
     </tr>
     <tr>
       <th>4</th>
       <td>Tantama Hingga Perwira, Ini Urutan Lengkap Pan...</td>
+      <td>Jakarta, CNBC Indonesia-Tentara Nasional Indon...</td>
       <td>Research</td>
       <td>tantama perwira urut lengkap pangkat tni</td>
     </tr>
