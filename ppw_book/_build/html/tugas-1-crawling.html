@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'tugas-1-crawling';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modelling Vector Space Model" href="tugas-2-vsm.html" />
     <link rel="prev" title="Pencarian &amp; Penambangan Web" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -180,6 +181,7 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Crawling Web Berita CNBC Indonesia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tugas-2-vsm.html">Modelling Vector Space Model</a></li>
 </ul>
 
     </div>
@@ -381,7 +383,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-program">Code Program</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inisialisasi-variabel-dan-url">Inisialisasi Variabel dan URL</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-pengambilan-data">Proses Pengambilan Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mengecek-apakahh-panjang-hasil-scrapping">Mengecek apakahh panjang hasil scrapping</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mengecek-apakahh-panjang-hasil-scrapping-sama">Mengecek apakahh panjang hasil scrapping sama</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-data-ke-dalam-csv">Convert data ke dalam csv</a></li>
@@ -601,12 +603,12 @@ document.write(`
 <span class="g g-Whitespace">    </span><span class="mi">466</span> <span class="k">try</span><span class="p">:</span>
 <span class="g g-Whitespace">    </span><span class="mi">467</span>     <span class="n">assert_header_parsing</span><span class="p">(</span><span class="n">httplib_response</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
 
-<span class="nn">File C:\Program Files\Python311\Lib\http\client.py:1395,</span> in <span class="ni">HTTPConnection.getresponse</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1393</span> <span class="k">try</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1394</span>     <span class="k">try</span><span class="p">:</span>
-<span class="ne">-&gt; </span><span class="mi">1395</span>         <span class="n">response</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1396</span>     <span class="k">except</span> <span class="ne">ConnectionError</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1397</span>         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="nn">File C:\Program Files\Python311\Lib\http\client.py:1390,</span> in <span class="ni">HTTPConnection.getresponse</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1388</span> <span class="k">try</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1389</span>     <span class="k">try</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1390</span>         <span class="n">response</span><span class="o">.</span><span class="n">begin</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1391</span>     <span class="k">except</span> <span class="ne">ConnectionError</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1392</span>         <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 <span class="nn">File C:\Program Files\Python311\Lib\http\client.py:325,</span> in <span class="ni">HTTPResponse.begin</span><span class="nt">(self)</span>
 <span class="g g-Whitespace">    </span><span class="mi">323</span> <span class="c1"># read until we get a non-100 response</span>
@@ -650,8 +652,8 @@ document.write(`
 </div>
 </div>
 <p>Setiap artikel diambil dan data seperti judul, tanggal, dan isi artikel diproses dan disimpan dalam list yang telah disiapkan. Jika ada error dalam pengambilan data, status error akan diprint</p>
-<section id="mengecek-apakahh-panjang-hasil-scrapping">
-<h4>Mengecek apakahh panjang hasil scrapping<a class="headerlink" href="#mengecek-apakahh-panjang-hasil-scrapping" title="Link to this heading">#</a></h4>
+<section id="mengecek-apakahh-panjang-hasil-scrapping-sama">
+<h4>Mengecek apakahh panjang hasil scrapping sama<a class="headerlink" href="#mengecek-apakahh-panjang-hasil-scrapping-sama" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">judul</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">tanggal</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">isi</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">url_list</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">kategori_list</span><span class="p">))</span>
@@ -659,7 +661,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>400 400 400 400 400
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>398 398 398 398 398
 </pre></div>
 </div>
 </div>
@@ -687,9 +689,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">
-  <div id="df-181c1a40-3a06-456f-b2d8-e85f9d5936a6" class="colab-df-container">
-    <div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -717,257 +717,47 @@ document.write(`
   <tbody>
     <tr>
       <th>0</th>
-      <td>10 Provinsi Ini Alami Deflasi Parah, Ada Kalim...</td>
-      <td>04 September 2024 11:50</td>
-      <td>Jakarta, CNBC Indonesia-Memasuki September 202...</td>
+      <td>Bukan Kaleng-kaleng! Nilai Skuad Timnas Indone...</td>
+      <td>09 September 2024 19:30</td>
+      <td>Jakarta, CNBC Indonesia -Kedatangan pemain-pem...</td>
       <td>https://www.cnbcindonesia.com/research/2024090...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Tol Langit SATRIA 1: Menjangkau Pedalaman Indo...</td>
-      <td>04 September 2024 11:40</td>
-      <td>Jakarta, CNBC Indonesia- Satelit SATRIA-1 dilu...</td>
+      <td>Aset Bank Mandiri Tembus Rp 2.200 T, Paling Ju...</td>
+      <td>09 September 2024 19:05</td>
+      <td>Jakarta, CNBC Indonesia -Sepanjang paruh perta...</td>
       <td>https://www.cnbcindonesia.com/research/2024090...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Deret Kesederhanaan Paus Fransiskus: Arloji Ra...</td>
-      <td>04 September 2024 10:10</td>
-      <td>Jakarta, CNBC Indonesia -Paus Fransiskus menua...</td>
+      <td>Emas Meredup Saat Suku Bunga The Fed Mau Turun...</td>
+      <td>09 September 2024 18:10</td>
+      <td>Jakarta,CNBC Indonesia -Harga emas dunia melem...</td>
       <td>https://www.cnbcindonesia.com/research/2024090...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>Daftar 10 Negara dengan Utang IMF Terbesar di ...</td>
-      <td>04 September 2024 09:20</td>
-      <td>Jakarta, CNBC Indonesia-Memasuki periode Septe...</td>
+      <td>Tetangga RI Dihantam 'Bencana' Iklim, Harga Ba...</td>
+      <td>09 September 2024 15:55</td>
+      <td>Jakarta, CNBC Indonesia -Indeks Harga Konsumen...</td>
       <td>https://www.cnbcindonesia.com/research/2024090...</td>
       <td>Research</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>Pahami Disini! Perbedaan Pastor dan Uskup Dala...</td>
-      <td>04 September 2024 08:25</td>
-      <td>Jakarta, CNBC Indonesia -Dalam Gereja Katolik,...</td>
+      <td>Tantama Hingga Perwira, Ini Urutan Lengkap Pan...</td>
+      <td>09 September 2024 14:35</td>
+      <td>Jakarta, CNBC Indonesia-Tentara Nasional Indon...</td>
       <td>https://www.cnbcindonesia.com/research/2024090...</td>
       <td>Research</td>
     </tr>
   </tbody>
 </table>
-</div>
-    <div class="colab-df-buttons">
-
-  <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-181c1a40-3a06-456f-b2d8-e85f9d5936a6')"
-            title="Convert this dataframe to an interactive table."
-            style="display:none;">
-
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
-    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
-  </svg>
-    </button>
-
-  <style>
-    .colab-df-container {
-      display:flex;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    .colab-df-buttons div {
-      margin-bottom: 4px;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-
-    <script>
-      const buttonEl =
-        document.querySelector('#df-181c1a40-3a06-456f-b2d8-e85f9d5936a6 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-181c1a40-3a06-456f-b2d8-e85f9d5936a6');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
-  </div>
-
-
-<div id="df-a495b482-9dc5-479b-ba80-25509c97e67e">
-  <button class="colab-df-quickchart" onclick="quickchart('df-a495b482-9dc5-479b-ba80-25509c97e67e')"
-            title="Suggest charts"
-            style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
-</svg>
-  </button>
-
-<style>
-  .colab-df-quickchart {
-      --bg-color: #E8F0FE;
-      --fill-color: #1967D2;
-      --hover-bg-color: #E2EBFA;
-      --hover-fill-color: #174EA6;
-      --disabled-fill-color: #AAA;
-      --disabled-bg-color: #DDD;
-  }
-
-  [theme=dark] .colab-df-quickchart {
-      --bg-color: #3B4455;
-      --fill-color: #D2E3FC;
-      --hover-bg-color: #434B5C;
-      --hover-fill-color: #FFFFFF;
-      --disabled-bg-color: #3B4455;
-      --disabled-fill-color: #666;
-  }
-
-  .colab-df-quickchart {
-    background-color: var(--bg-color);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    fill: var(--fill-color);
-    height: 32px;
-    padding: 0;
-    width: 32px;
-  }
-
-  .colab-df-quickchart:hover {
-    background-color: var(--hover-bg-color);
-    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-    fill: var(--button-hover-fill-color);
-  }
-
-  .colab-df-quickchart-complete:disabled,
-  .colab-df-quickchart-complete:disabled:hover {
-    background-color: var(--disabled-bg-color);
-    fill: var(--disabled-fill-color);
-    box-shadow: none;
-  }
-
-  .colab-df-spinner {
-    border: 2px solid var(--fill-color);
-    border-color: transparent;
-    border-bottom-color: var(--fill-color);
-    animation:
-      spin 1s steps(1) infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-      border-left-color: var(--fill-color);
-    }
-    20% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    30% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-      border-right-color: var(--fill-color);
-    }
-    40% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    60% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-    }
-    80% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-bottom-color: var(--fill-color);
-    }
-    90% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-    }
-  }
-</style>
-
-  <script>
-    async function quickchart(key) {
-      const quickchartButtonEl =
-        document.querySelector('#' + key + ' button');
-      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-      quickchartButtonEl.classList.add('colab-df-spinner');
-      try {
-        const charts = await google.colab.kernel.invokeFunction(
-            'suggestCharts', [key], {});
-      } catch (error) {
-        console.error('Error during call to suggestCharts:', error);
-      }
-      quickchartButtonEl.classList.remove('colab-df-spinner');
-      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-    }
-    (() => {
-      let quickchartButtonEl =
-        document.querySelector('#df-a495b482-9dc5-479b-ba80-25509c97e67e button');
-      quickchartButtonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-    })();
-  </script>
-</div>
-
-    </div>
-  </div>
-</div></div>
+</div></div></div>
 </div>
 </section>
 </section>
@@ -1016,6 +806,15 @@ document.write(`
         <p class="prev-next-title">Pencarian &amp; Penambangan Web</p>
       </div>
     </a>
+    <a class="right-next"
+       href="tugas-2-vsm.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Modelling Vector Space Model</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1038,7 +837,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-program">Code Program</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inisialisasi-variabel-dan-url">Inisialisasi Variabel dan URL</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proses-pengambilan-data">Proses Pengambilan Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mengecek-apakahh-panjang-hasil-scrapping">Mengecek apakahh panjang hasil scrapping</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mengecek-apakahh-panjang-hasil-scrapping-sama">Mengecek apakahh panjang hasil scrapping sama</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#convert-data-ke-dalam-csv">Convert data ke dalam csv</a></li>
