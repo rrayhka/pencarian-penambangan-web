@@ -395,8 +395,9 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-svm">Modelling SVM</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepocessing">Prepocessing</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cleansing-function">Cleansing Function</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#beberapa-fungsi-yang-digunakan-untuk-mengolah-dataset-kata">Beberapa FUngsi yang digunakan untuk mengolah dataset kata</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-clean-text">Fungsi clean text</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-remove-stopword">Fungsi Remove Stopword</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-stemming">Fungsi Stemming</a></li>
 </ul>
 </li>
@@ -508,13 +509,13 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Defaulting to user installation because normal site-packages is not writeable
-Requirement already satisfied: Sastrawi in c:\users\riset-2\appdata\roaming\python\python311\site-packages (1.0.1)
-Requirement already satisfied: nltk in c:\users\riset-2\appdata\roaming\python\python311\site-packages (3.8.1)
-Requirement already satisfied: click in c:\users\riset-2\appdata\roaming\python\python311\site-packages (from nltk) (8.1.7)
-Requirement already satisfied: joblib in c:\users\riset-2\appdata\roaming\python\python311\site-packages (from nltk) (1.4.2)
-Requirement already satisfied: regex&gt;=2021.8.3 in c:\users\riset-2\appdata\roaming\python\python311\site-packages (from nltk) (2024.5.15)
-Requirement already satisfied: tqdm in c:\users\riset-2\appdata\roaming\python\python311\site-packages (from nltk) (4.66.4)
-Requirement already satisfied: colorama in c:\users\riset-2\appdata\roaming\python\python311\site-packages (from click-&gt;nltk) (0.4.6)
+Requirement already satisfied: Sastrawi in c:\program files\python311\lib\site-packages (1.0.1)
+Requirement already satisfied: nltk in c:\program files\python311\lib\site-packages (3.9.1)
+Requirement already satisfied: click in c:\program files\python311\lib\site-packages (from nltk) (8.1.7)
+Requirement already satisfied: joblib in c:\program files\python311\lib\site-packages (from nltk) (1.4.2)
+Requirement already satisfied: regex&gt;=2021.8.3 in c:\program files\python311\lib\site-packages (from nltk) (2024.9.11)
+Requirement already satisfied: tqdm in c:\program files\python311\lib\site-packages (from nltk) (4.66.5)
+Requirement already satisfied: colorama in c:\program files\python311\lib\site-packages (from click-&gt;nltk) (0.4.6)
 </pre></div>
 </div>
 </div>
@@ -527,7 +528,7 @@ Requirement already satisfied: colorama in c:\users\riset-2\appdata\roaming\pyth
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">nltk</span>
 <span class="kn">from</span> <span class="nn">Sastrawi.Stemmer.StemmerFactory</span> <span class="kn">import</span> <span class="n">StemmerFactory</span>
-
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span><span class="p">,</span> <span class="n">CountVectorizer</span>
 <span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
 <span class="kn">import</span> <span class="nn">string</span>
@@ -543,7 +544,7 @@ Requirement already satisfied: colorama in c:\users\riset-2\appdata\roaming\pyth
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package stopwords to
-[nltk_data]     C:\Users\RISET-2\AppData\Roaming\nltk_data...
+[nltk_data]     C:\Users\akhyar\AppData\Roaming\nltk_data...
 [nltk_data]   Package stopwords is already up-to-date!
 </pre></div>
 </div>
@@ -555,72 +556,7 @@ Requirement already satisfied: colorama in c:\users\riset-2\appdata\roaming\pyth
 <p>Data yang sebelumnya sudah discrapping pada <a class="reference external" href="https://rrayhka.github.io/pencarian-penambangan-web/tugas-1-crawling.html#convert-data-ke-dalam-csv">tugas 1</a> diimport untuk dijadikan VSM</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;/content/data-artikel-cnbc.csv&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;/content/data-artikel-cnbc.csv&quot;</span><span class="p">)</span>
-
-<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\pandas\io\parsers\readers.py:1026,</span> in <span class="ni">read_csv</span><span class="nt">(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1013</span> <span class="n">kwds_defaults</span> <span class="o">=</span> <span class="n">_refine_defaults_read</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1014</span>     <span class="n">dialect</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1015</span>     <span class="n">delimiter</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1022</span>     <span class="n">dtype_backend</span><span class="o">=</span><span class="n">dtype_backend</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1023</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1024</span> <span class="n">kwds</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwds_defaults</span><span class="p">)</span>
-<span class="ne">-&gt; </span><span class="mi">1026</span> <span class="k">return</span> <span class="n">_read</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="n">kwds</span><span class="p">)</span>
-
-<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\pandas\io\parsers\readers.py:620,</span> in <span class="ni">_read</span><span class="nt">(filepath_or_buffer, kwds)</span>
-<span class="g g-Whitespace">    </span><span class="mi">617</span> <span class="n">_validate_names</span><span class="p">(</span><span class="n">kwds</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;names&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">))</span>
-<span class="g g-Whitespace">    </span><span class="mi">619</span> <span class="c1"># Create the parser.</span>
-<span class="ne">--&gt; </span><span class="mi">620</span> <span class="n">parser</span> <span class="o">=</span> <span class="n">TextFileReader</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">622</span> <span class="k">if</span> <span class="n">chunksize</span> <span class="ow">or</span> <span class="n">iterator</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">623</span>     <span class="k">return</span> <span class="n">parser</span>
-
-<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\pandas\io\parsers\readers.py:1620,</span> in <span class="ni">TextFileReader.__init__</span><span class="nt">(self, f, engine, **kwds)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1617</span>     <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwds</span><span class="p">[</span><span class="s2">&quot;has_index_names&quot;</span><span class="p">]</span>
-<span class="g g-Whitespace">   </span><span class="mi">1619</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span> <span class="n">IOHandles</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="ne">-&gt; </span><span class="mi">1620</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_engine</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">engine</span><span class="p">)</span>
-
-<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\pandas\io\parsers\readers.py:1880,</span> in <span class="ni">TextFileReader._make_engine</span><span class="nt">(self, f, engine)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1878</span>     <span class="k">if</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mode</span><span class="p">:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1879</span>         <span class="n">mode</span> <span class="o">+=</span> <span class="s2">&quot;b&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1880</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="o">=</span> <span class="n">get_handle</span><span class="p">(</span>
-<span class="g g-Whitespace">   </span><span class="mi">1881</span>     <span class="n">f</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1882</span>     <span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1883</span>     <span class="n">encoding</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1884</span>     <span class="n">compression</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;compression&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1885</span>     <span class="n">memory_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;memory_map&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1886</span>     <span class="n">is_text</span><span class="o">=</span><span class="n">is_text</span><span class="p">,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1887</span>     <span class="n">errors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;encoding_errors&quot;</span><span class="p">,</span> <span class="s2">&quot;strict&quot;</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1888</span>     <span class="n">storage_options</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;storage_options&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-<span class="g g-Whitespace">   </span><span class="mi">1889</span> <span class="p">)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1890</span> <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
-<span class="g g-Whitespace">   </span><span class="mi">1891</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">handle</span>
-
-<span class="nn">File ~\AppData\Roaming\Python\Python311\site-packages\pandas\io\common.py:873,</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
-<span class="g g-Whitespace">    </span><span class="mi">868</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">869</span>     <span class="c1"># Check whether the filename is to be opened in binary mode.</span>
-<span class="g g-Whitespace">    </span><span class="mi">870</span>     <span class="c1"># Binary mode does not support &#39;encoding&#39; and &#39;newline&#39;.</span>
-<span class="g g-Whitespace">    </span><span class="mi">871</span>     <span class="k">if</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span> <span class="ow">and</span> <span class="s2">&quot;b&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">872</span>         <span class="c1"># Encoding</span>
-<span class="ne">--&gt; </span><span class="mi">873</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
-<span class="g g-Whitespace">    </span><span class="mi">874</span>             <span class="n">handle</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">875</span>             <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">876</span>             <span class="n">encoding</span><span class="o">=</span><span class="n">ioargs</span><span class="o">.</span><span class="n">encoding</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">877</span>             <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">878</span>             <span class="n">newline</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-<span class="g g-Whitespace">    </span><span class="mi">879</span>         <span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">880</span>     <span class="k">else</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">881</span>         <span class="c1"># Binary mode</span>
-<span class="g g-Whitespace">    </span><span class="mi">882</span>         <span class="n">handle</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="n">ioargs</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/content/data-artikel-cnbc.csv&#39;
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data-artikel-cnbc.csv&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -632,9 +568,7 @@ Requirement already satisfied: colorama in c:\users\riset-2\appdata\roaming\pyth
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">
-  <div id="df-1171a1c9-cfab-4958-b1c9-e045b6d72e39" class="colab-df-container">
-    <div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -702,217 +636,7 @@ Requirement already satisfied: colorama in c:\users\riset-2\appdata\roaming\pyth
     </tr>
   </tbody>
 </table>
-</div>
-    <div class="colab-df-buttons">
-
-  <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-1171a1c9-cfab-4958-b1c9-e045b6d72e39')"
-            title="Convert this dataframe to an interactive table."
-            style="display:none;">
-
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
-    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
-  </svg>
-    </button>
-
-  <style>
-    .colab-df-container {
-      display:flex;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    .colab-df-buttons div {
-      margin-bottom: 4px;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-
-    <script>
-      const buttonEl =
-        document.querySelector('#df-1171a1c9-cfab-4958-b1c9-e045b6d72e39 button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-1171a1c9-cfab-4958-b1c9-e045b6d72e39');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
-  </div>
-
-
-<div id="df-9f57d4e8-99f3-4de0-bfac-874af4bfe9db">
-  <button class="colab-df-quickchart" onclick="quickchart('df-9f57d4e8-99f3-4de0-bfac-874af4bfe9db')"
-            title="Suggest charts"
-            style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
-</svg>
-  </button>
-
-<style>
-  .colab-df-quickchart {
-      --bg-color: #E8F0FE;
-      --fill-color: #1967D2;
-      --hover-bg-color: #E2EBFA;
-      --hover-fill-color: #174EA6;
-      --disabled-fill-color: #AAA;
-      --disabled-bg-color: #DDD;
-  }
-
-  [theme=dark] .colab-df-quickchart {
-      --bg-color: #3B4455;
-      --fill-color: #D2E3FC;
-      --hover-bg-color: #434B5C;
-      --hover-fill-color: #FFFFFF;
-      --disabled-bg-color: #3B4455;
-      --disabled-fill-color: #666;
-  }
-
-  .colab-df-quickchart {
-    background-color: var(--bg-color);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    fill: var(--fill-color);
-    height: 32px;
-    padding: 0;
-    width: 32px;
-  }
-
-  .colab-df-quickchart:hover {
-    background-color: var(--hover-bg-color);
-    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-    fill: var(--button-hover-fill-color);
-  }
-
-  .colab-df-quickchart-complete:disabled,
-  .colab-df-quickchart-complete:disabled:hover {
-    background-color: var(--disabled-bg-color);
-    fill: var(--disabled-fill-color);
-    box-shadow: none;
-  }
-
-  .colab-df-spinner {
-    border: 2px solid var(--fill-color);
-    border-color: transparent;
-    border-bottom-color: var(--fill-color);
-    animation:
-      spin 1s steps(1) infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-      border-left-color: var(--fill-color);
-    }
-    20% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    30% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-      border-right-color: var(--fill-color);
-    }
-    40% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    60% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-    }
-    80% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-bottom-color: var(--fill-color);
-    }
-    90% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-    }
-  }
-</style>
-
-  <script>
-    async function quickchart(key) {
-      const quickchartButtonEl =
-        document.querySelector('#' + key + ' button');
-      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-      quickchartButtonEl.classList.add('colab-df-spinner');
-      try {
-        const charts = await google.colab.kernel.invokeFunction(
-            'suggestCharts', [key], {});
-      } catch (error) {
-        console.error('Error during call to suggestCharts:', error);
-      }
-      quickchartButtonEl.classList.remove('colab-df-spinner');
-      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-    }
-    (() => {
-      let quickchartButtonEl =
-        document.querySelector('#df-9f57d4e8-99f3-4de0-bfac-874af4bfe9db button');
-      quickchartButtonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-    })();
-  </script>
-</div>
-
-    </div>
-  </div>
-</div></div>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -923,9 +647,7 @@ Requirement already satisfied: colorama in c:\users\riset-2\appdata\roaming\pyth
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">
-  <div id="df-b69c8cef-a44c-4740-b54d-f0e5082e0ace" class="colab-df-container">
-    <div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -975,217 +697,7 @@ Requirement already satisfied: colorama in c:\users\riset-2\appdata\roaming\pyth
     </tr>
   </tbody>
 </table>
-</div>
-    <div class="colab-df-buttons">
-
-  <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-b69c8cef-a44c-4740-b54d-f0e5082e0ace')"
-            title="Convert this dataframe to an interactive table."
-            style="display:none;">
-
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
-    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
-  </svg>
-    </button>
-
-  <style>
-    .colab-df-container {
-      display:flex;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    .colab-df-buttons div {
-      margin-bottom: 4px;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-
-    <script>
-      const buttonEl =
-        document.querySelector('#df-b69c8cef-a44c-4740-b54d-f0e5082e0ace button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-b69c8cef-a44c-4740-b54d-f0e5082e0ace');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
-  </div>
-
-
-<div id="df-de81c58b-7c40-45b2-b53b-cbbe9b6903a5">
-  <button class="colab-df-quickchart" onclick="quickchart('df-de81c58b-7c40-45b2-b53b-cbbe9b6903a5')"
-            title="Suggest charts"
-            style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
-</svg>
-  </button>
-
-<style>
-  .colab-df-quickchart {
-      --bg-color: #E8F0FE;
-      --fill-color: #1967D2;
-      --hover-bg-color: #E2EBFA;
-      --hover-fill-color: #174EA6;
-      --disabled-fill-color: #AAA;
-      --disabled-bg-color: #DDD;
-  }
-
-  [theme=dark] .colab-df-quickchart {
-      --bg-color: #3B4455;
-      --fill-color: #D2E3FC;
-      --hover-bg-color: #434B5C;
-      --hover-fill-color: #FFFFFF;
-      --disabled-bg-color: #3B4455;
-      --disabled-fill-color: #666;
-  }
-
-  .colab-df-quickchart {
-    background-color: var(--bg-color);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    fill: var(--fill-color);
-    height: 32px;
-    padding: 0;
-    width: 32px;
-  }
-
-  .colab-df-quickchart:hover {
-    background-color: var(--hover-bg-color);
-    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-    fill: var(--button-hover-fill-color);
-  }
-
-  .colab-df-quickchart-complete:disabled,
-  .colab-df-quickchart-complete:disabled:hover {
-    background-color: var(--disabled-bg-color);
-    fill: var(--disabled-fill-color);
-    box-shadow: none;
-  }
-
-  .colab-df-spinner {
-    border: 2px solid var(--fill-color);
-    border-color: transparent;
-    border-bottom-color: var(--fill-color);
-    animation:
-      spin 1s steps(1) infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-      border-left-color: var(--fill-color);
-    }
-    20% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    30% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-      border-right-color: var(--fill-color);
-    }
-    40% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    60% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-    }
-    80% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-bottom-color: var(--fill-color);
-    }
-    90% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-    }
-  }
-</style>
-
-  <script>
-    async function quickchart(key) {
-      const quickchartButtonEl =
-        document.querySelector('#' + key + ' button');
-      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-      quickchartButtonEl.classList.add('colab-df-spinner');
-      try {
-        const charts = await google.colab.kernel.invokeFunction(
-            'suggestCharts', [key], {});
-      } catch (error) {
-        console.error('Error during call to suggestCharts:', error);
-      }
-      quickchartButtonEl.classList.remove('colab-df-spinner');
-      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-    }
-    (() => {
-      let quickchartButtonEl =
-        document.querySelector('#df-de81c58b-7c40-45b2-b53b-cbbe9b6903a5 button');
-      quickchartButtonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-    })();
-  </script>
-</div>
-
-    </div>
-  </div>
-</div></div>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1231,9 +743,7 @@ memory usage: 1.7+ KB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">
-  <div id="df-8739e2e4-c79c-4f42-a7d3-6e7449a7d15a" class="colab-df-container">
-    <div>
+<div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
@@ -1283,217 +793,7 @@ memory usage: 1.7+ KB
     </tr>
   </tbody>
 </table>
-</div>
-    <div class="colab-df-buttons">
-
-  <div class="colab-df-container">
-    <button class="colab-df-convert" onclick="convertToInteractive('df-8739e2e4-c79c-4f42-a7d3-6e7449a7d15a')"
-            title="Convert this dataframe to an interactive table."
-            style="display:none;">
-
-  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960">
-    <path d="M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z"/>
-  </svg>
-    </button>
-
-  <style>
-    .colab-df-container {
-      display:flex;
-      gap: 12px;
-    }
-
-    .colab-df-convert {
-      background-color: #E8F0FE;
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      display: none;
-      fill: #1967D2;
-      height: 32px;
-      padding: 0 0 0 0;
-      width: 32px;
-    }
-
-    .colab-df-convert:hover {
-      background-color: #E2EBFA;
-      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);
-      fill: #174EA6;
-    }
-
-    .colab-df-buttons div {
-      margin-bottom: 4px;
-    }
-
-    [theme=dark] .colab-df-convert {
-      background-color: #3B4455;
-      fill: #D2E3FC;
-    }
-
-    [theme=dark] .colab-df-convert:hover {
-      background-color: #434B5C;
-      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);
-      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));
-      fill: #FFFFFF;
-    }
-  </style>
-
-    <script>
-      const buttonEl =
-        document.querySelector('#df-8739e2e4-c79c-4f42-a7d3-6e7449a7d15a button.colab-df-convert');
-      buttonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-      async function convertToInteractive(key) {
-        const element = document.querySelector('#df-8739e2e4-c79c-4f42-a7d3-6e7449a7d15a');
-        const dataTable =
-          await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                    [key], {});
-        if (!dataTable) return;
-
-        const docLinkHtml = 'Like what you see? Visit the ' +
-          '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-          + ' to learn more about interactive tables.';
-        element.innerHTML = '';
-        dataTable['output_type'] = 'display_data';
-        await google.colab.output.renderOutput(dataTable, element);
-        const docLink = document.createElement('div');
-        docLink.innerHTML = docLinkHtml;
-        element.appendChild(docLink);
-      }
-    </script>
-  </div>
-
-
-<div id="df-1a32162b-f10a-498d-94fc-cdd841320be8">
-  <button class="colab-df-quickchart" onclick="quickchart('df-1a32162b-f10a-498d-94fc-cdd841320be8')"
-            title="Suggest charts"
-            style="display:none;">
-
-<svg xmlns="http://www.w3.org/2000/svg" height="24px"viewBox="0 0 24 24"
-     width="24px">
-    <g>
-        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-    </g>
-</svg>
-  </button>
-
-<style>
-  .colab-df-quickchart {
-      --bg-color: #E8F0FE;
-      --fill-color: #1967D2;
-      --hover-bg-color: #E2EBFA;
-      --hover-fill-color: #174EA6;
-      --disabled-fill-color: #AAA;
-      --disabled-bg-color: #DDD;
-  }
-
-  [theme=dark] .colab-df-quickchart {
-      --bg-color: #3B4455;
-      --fill-color: #D2E3FC;
-      --hover-bg-color: #434B5C;
-      --hover-fill-color: #FFFFFF;
-      --disabled-bg-color: #3B4455;
-      --disabled-fill-color: #666;
-  }
-
-  .colab-df-quickchart {
-    background-color: var(--bg-color);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    display: none;
-    fill: var(--fill-color);
-    height: 32px;
-    padding: 0;
-    width: 32px;
-  }
-
-  .colab-df-quickchart:hover {
-    background-color: var(--hover-bg-color);
-    box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-    fill: var(--button-hover-fill-color);
-  }
-
-  .colab-df-quickchart-complete:disabled,
-  .colab-df-quickchart-complete:disabled:hover {
-    background-color: var(--disabled-bg-color);
-    fill: var(--disabled-fill-color);
-    box-shadow: none;
-  }
-
-  .colab-df-spinner {
-    border: 2px solid var(--fill-color);
-    border-color: transparent;
-    border-bottom-color: var(--fill-color);
-    animation:
-      spin 1s steps(1) infinite;
-  }
-
-  @keyframes spin {
-    0% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-      border-left-color: var(--fill-color);
-    }
-    20% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    30% {
-      border-color: transparent;
-      border-left-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-      border-right-color: var(--fill-color);
-    }
-    40% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-top-color: var(--fill-color);
-    }
-    60% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-    }
-    80% {
-      border-color: transparent;
-      border-right-color: var(--fill-color);
-      border-bottom-color: var(--fill-color);
-    }
-    90% {
-      border-color: transparent;
-      border-bottom-color: var(--fill-color);
-    }
-  }
-</style>
-
-  <script>
-    async function quickchart(key) {
-      const quickchartButtonEl =
-        document.querySelector('#' + key + ' button');
-      quickchartButtonEl.disabled = true;  // To prevent multiple clicks.
-      quickchartButtonEl.classList.add('colab-df-spinner');
-      try {
-        const charts = await google.colab.kernel.invokeFunction(
-            'suggestCharts', [key], {});
-      } catch (error) {
-        console.error('Error during call to suggestCharts:', error);
-      }
-      quickchartButtonEl.classList.remove('colab-df-spinner');
-      quickchartButtonEl.classList.add('colab-df-quickchart-complete');
-    }
-    (() => {
-      let quickchartButtonEl =
-        document.querySelector('#df-1a32162b-f10a-498d-94fc-cdd841320be8 button');
-      quickchartButtonEl.style.display =
-        google.colab.kernel.accessAllowed ? 'block' : 'none';
-    })();
-  </script>
-</div>
-
-    </div>
-  </div>
-</div></div>
+</div></div></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1502,8 +802,8 @@ memory usage: 1.7+ KB
 </div>
 </div>
 </div>
-<section id="cleansing-function">
-<h4>Cleansing Function<a class="headerlink" href="#cleansing-function" title="Link to this heading">#</a></h4>
+<section id="beberapa-fungsi-yang-digunakan-untuk-mengolah-dataset-kata">
+<h4>Beberapa FUngsi yang digunakan untuk mengolah dataset kata<a class="headerlink" href="#beberapa-fungsi-yang-digunakan-untuk-mengolah-dataset-kata" title="Link to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p><strong>Pembersihan Teks</strong>:
 - Menghapus URL yang diawali dengan “www.” atau “https://”, agar tidak mengganggu hasil analisis.
@@ -1549,10 +849,22 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[\s]+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="c1"># Menghapus tambahan spasi</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">,</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="c1"># Menghapus karakter non-ASCII</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^\x00-\x7f]&#39;</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="c1"># Menghapus karakter non-printable</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="c1"># Menghapus angka</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="c1"># Mengubah teks menjadi huruf kecil</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\b-\b&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="c1"># Menghapus tanda hubung yang tidak berada di antara dua huruf</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[^\w\s]+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="c1"># Menghapus tanda baca</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1">#Menghapus baris baru</span>
+    <span class="k">return</span> <span class="n">text</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fungsi-remove-stopword">
+<h4>Fungsi Remove Stopword<a class="headerlink" href="#fungsi-remove-stopword" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">stopword</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="c1"># Memisahkan teks menjadi kata-kata</span>
     <span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">]</span> <span class="c1"># Menghapus stopwords dari teks</span>
     <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="c1"># Menggabungkan kata-kata kembali menjadi teks</span>
@@ -1579,7 +891,8 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">preprocessing</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
     <span class="n">clean_text</span> <span class="o">=</span> <span class="n">cleansing</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
-    <span class="n">stemmed_text</span> <span class="o">=</span> <span class="n">stemming_indo</span><span class="p">(</span><span class="n">clean_text</span><span class="p">)</span>
+    <span class="n">stopword_text</span> <span class="o">=</span> <span class="n">stopword</span><span class="p">(</span><span class="n">clean_text</span><span class="p">)</span>
+    <span class="n">stemmed_text</span> <span class="o">=</span> <span class="n">stemming_indo</span><span class="p">(</span><span class="n">stopword_text</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">stemmed_text</span>
 </pre></div>
 </div>
@@ -1592,27 +905,52 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jakarta, CNBC Indonesia-Dalam beberapa waktu terakhir, kebutuhan akan air galon di Indonesia menjadi sorotan utama, terutama dalam konteks dampaknya terhadap ekonomi rumah tangga kelas menengah.
-Menurut mantan Menteri Keuangan, Bambang Brodjonegoro, kebiasaan masyarakat Indonesia yang bergantung pada air kemasan, seperti air galon, secara tidak sadar telah menggerus pendapatan rumah tangga, khususnya di kalangan kelas menengah. Hal ini turut memperburuk kondisi ekonomi pasca-pandemi Covid-19, yang menyebabkan banyak kelas menengah turun ke kelas ekonomi yang lebih rendah.
-Pertanyaan pun muncul, apakah Indonesia mampu mengandalkan air keran sebagai sumber air minum layak? Di beberapa negara maju, air keran yang bisa langsung diminum merupakan fasilitas umum yang umum tersedia, sehingga masyarakat tidak perlu mengeluarkan uang ekstra untuk membeli air kemasan.
-Meski begitu, hingga saat ini, di Indonesia, penggunaan air keran sebagai air minum masih belum umum. Namun, ada perkembangan signifikan di Ibu Kota Negara (IKN) Nusantara, di mana proyek penyaluran air keran sudah mulai berjalan. Menteri PUPR, Basuki Hadimuljono, mengungkapkan bahwa fasilitas reservoir dan instalasi pengolahan air minum (IPA) Sepaku siap mendistribusikan air minum dan air bersih ke berbagai kawasan di IKN.
-Meski ada upaya menuju penggunaan air keran di IKN, data menunjukkan bahwa konsumsi air minum dalam kemasan di rumah tangga Indonesia masih tinggi. Selama lima tahun terakhir, permintaan air minum dalam kemasan cenderung meningkat.
-Menurut data Badan Pusat Statistik (BPS), meskipun ada fluktuasi, persentase rumah tangga yang menggunakan air minum dalam kemasan terus mengalami peningkatan, terutama di daerah perkotaan. Hal ini dipicu oleh meningkatnya kesadaran akan kebersihan dan kualitas air minum di kalangan masyarakat.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jakarta, CNBC Indonesia-Indonesia terus memperluas jaringan tol sebagai bagian dari upaya untuk meningkatkan konektivitas antar wilayah dan mendukung pertumbuhan ekonomi.
+Berdasarkan Data Badan Pengaturan Jalan Tol (BPJT) sejak 1978 hingga 2024 mencatat total panjang jalan tol yang beroperasi di Indonesia sepanjang 2.839 kilometer (Km), dengan total jalan mencapai 73 .
+Total panjang jalan tol di Indonesia tersebar di beberapa wilayah strategis dengan kontribusi signifikan terhadap konektivitas nasional. Di kawasan Jabodetabek, panjang jalan tol mencapai 354,39 km, menjadi tulang punggung mobilitas di area metropolitan terbesar di Indonesia.
 
-Selain itu, data menunjukkan bahwa beberapa provinsi di Indonesia mencatat konsumsi air minum dalam kemasan tertinggi.
-Pada 2023, DKI Jakarta memimpin dengan 79,39% rumah tangga menggunakan air minum dalam kemasan. Provinsi lainnya seperti Kalimantan Timur, Kepulauan Riau, dan Kalimantan Utara juga menunjukkan tren serupa.
-Faktor utama yang mendorong tingginya konsumsi air kemasan di provinsi-provinsi ini adalah akses yang lebih mudah dan kesadaran akan pentingnya air bersih di tengah pertumbuhan urbanisasi yang pesat.
-Peningkatan konsumsi air minum dalam kemasan ini menimbulkan pertanyaan tentang keberlanjutan dan dampaknya terhadap ekonomi rumah tangga. Sementara itu, upaya pemerintah untuk menyediakan air minum layak melalui infrastruktur air keran, seperti yang sedang dilakukan di IKN, menjadi langkah penting untuk mengurangi ketergantungan masyarakat terhadap air kemasan.
-Dengan infrastruktur yang lebih baik, diharapkan masyarakat Indonesia dapat beralih ke sumber air yang lebih efisien dan hemat biaya, tanpa mengorbankan kualitas dan kesehatan.
-Air Galon Jadi Sorotan
-Ekonom senior yang merupakan mantan Menteri Keuangan, Bambang Brodjonegoro mengatakan turunnya tingkat ekonomi kelas menengah di Indonesia tidak hanya terjadi karena pandemi Covid-19 dan banyaknya pemutusan hubungan kerja (PHK). Melainkan juga akibat kebiasaan sehari-hari kebutuhan terhadap air galon.
-&quot;Selama ini secara tidak sadar itu sudah menggerus income kita secara lumayan dengan style kita yang mengandalkan semua kepada air galon, air botol dan segala macamnya,&quot; kata Bambang di kantor Kamar Dagang dan Industri (Kadin) Indonesia, Jakarta, dikutip Senin (2/8/2024).Menteri Perencanaan Pembangunan Nasional (PPN)/Kepala Bappenas periode I pemerintahan Presiden Joko Widodo itu menekankan, kebiasaan mengkonsumsi air dalam kemasan tidak terjadi di semua negara.
-Di negara maju misalnya, warga kelas menengah terbiasa menenggak air minum yang disediakan pemerintah di tempat-tempat umum. Dengan adanya fasilitas air minum massal itu, masyarakat negara maju tidak perlu mengeluarkan uang untuk membeli minum.
-&quot;Daya beli kelas menengahnya aman karena untuk air pun mereka tidak perlu mengeluarkan uang terlalu banyak,&quot; kata dia.
-Meski begitu, Bambang mengatakan faktor kebutuhan air minum hanyalah satu dari banyak faktor lain yang menyebabkan banyak kelas menengah turun &#39;kasta&#39; ke kelas ekonomi yang lebih rendah. Bambang menduga faktor utama tumbangnya kelas menengah RI adalah pandemi Covid-19.
-&quot;Penyebabnya itu variatif. Karena kan kita lihat datanya dari 2019 ke 2023. Jadi penyebab pertama adalah Covid,&quot; ujar dia.
-
-CNBC INDONESIA RESEARCH[email protected]
+Sementara itu, Tol Trans Jawa membentang sepanjang 1.065,5 km, menghubungkan berbagai kota utama di Pulau Jawa dan mempercepat arus barang dan penumpang.
+Di luar Trans Jawa, tol-tol non-Trans Jawa memiliki panjang total 367,98 km, melayani wilayah-wilayah penting lainnya di Jawa. Di Sumatera, jaringan Tol Trans Sumatera sepanjang 884,45 km memperkuat aksesibilitas antarprovinsi di pulau tersebut.
+Di Kalimantan, tol sepanjang 97,27 km membantu menghubungkan kawasan-kawasan penting di pulau itu, sementara Sulawesi memiliki tol sepanjang 61,46 km dan Bali dengan tol sepanjang 10,07 km, masing-masing mendukung pembangunan dan pertumbuhan ekonomi di daerah-nya.
+Berikut adalah 10 jalan tol terpanjang di Indonesia yang berperan penting dalam mobilitas dan perekonomian negara :
+1. Tol Terbanggi Besar - Kayu Agung (Terpeka)
+Ruas tol ini merupakan bagian dari Tol Trans Sumatera, menghubungkan Provinsi Lampung dengan Provinsi Sumatera Selatan dengan panjang mencapai 189,4 km. Tol ini mempermudah arus barang dan orang di Sumatera dan telah menjadi salah satu jalur vital bagi perekonomian pulau tersebut.
+2. Tol Bakauheni - Terbanggi Besar (Bakter)
+Masih di Tol Trans Sumatera, Tol Bakter sepanjang 140,9 km ini juga berperan penting dalam meningkatkan konektivitas di Pulau Sumatera, khususnya di Provinsi Lampung.
+Jalan tol ini memperpendek waktu tempuh antara Bakauheni dan Terbanggi Besar secara signifikan.
+3. Tol Pekanbaru - Dumai (Permai)
+Berada di Provinsi Riau, Tol Permai sepanjang 131,5 km menghubungkan Pekanbaru dengan Dumai.
+Salah satu keunikan tol ini adalah adanya perlintasan khusus untuk gajah Sumatera, sebuah infrastruktur yang ramah lingkungan dan memperhatikan keberlanjutan satwa liar di wilayah tersebut.
+4. Tol Cikampek - Palimanan (Cipali)
+Dengan panjang 116,8 km, Tol Cipali adalah tol terpanjang di Pulau Jawa dan menjadi bagian dari Tol Trans Jawa yang menghubungkan Cikampek dengan Palimanan.
+Tol ini sangat penting dalam mendukung transportasi dan logistik di Jawa, terutama saat arus mudik lebaran.
+5. Tol Balikpapan - Samarinda
+Merupakan tol pertama di Kalimantan, Tol Balikpapan-Samarinda sepanjang 99 km mempersingkat waktu tempuh antara kedua kota hingga dua jam. Ruas tol ini mendukung pengembangan ekonomi di Kalimantan Timur.
+6. Tol Jakarta - Merak (Jamer)
+Menghubungkan Jakarta dengan Merak di Provinsi Banten, tol sepanjang 98 km ini adalah salah satu jalan tol tersibuk di Indonesia. Sejak diresmikan pada tahun 1984, Tol Jamer telah menjadi penghubung utama antara Jakarta dan berbagai kawasan industri di Banten.
+7. Tol Solo - Ngawi
+Bagian dari Tol Trans Jawa, Tol Solo-Ngawi sepanjang 90,4 km menghubungkan Solo dengan Ngawi di Jawa Timur. Tol ini membantu mengurangi waktu perjalanan di jalur tersebut dan meningkatkan arus logistik di wilayah Jawa Tengah dan Jawa Timur.
+8. Tol Ngawi - Kertosono
+Dengan panjang 87 km, Tol Ngawi-Kertosono juga merupakan bagian dari jaringan Tol Trans Jawa yang menghubungkan wilayah Ngawi dengan Kertosono di Jawa Timur. Tol ini memainkan peran kunci dalam mendukung transportasi barang dan penumpang di Jawa Timur.
+9. Tol Jakarta - Cikampek (Japek)
+Sepanjang 83 km, Tol Jakarta-Cikampek menghubungkan ibu kota Jakarta dengan kawasan industri di Cikampek, Provinsi Jawa Barat. Tol ini merupakan salah satu jalur terpenting bagi distribusi logistik di Pulau Jawa.
+10. Tol Jakarta Outer Ring Road I (JORR I)
+Tol lingkar luar pertama Jakarta sepanjang 64 km ini berfungsi sebagai penghubung antara berbagai wilayah di Jakarta, memudahkan arus lalu lintas dari dan menuju ibu kota
+Jalan-jalan tol ini tidak hanya memudahkan perjalanan, tetapi juga mendorong pertumbuhan ekonomi di daerah-daerah yang dilaluinya.
+Dengan terus berkembangnya infrastruktur tol, Indonesia semakin memperkuat posisinya sebagai negara dengan jaringan transportasi darat yang semakin efisien.
+CNBC INDONESIA RESEARCH
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;isi&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>jakarta cnbc indonesia indonesia luas jaring tol upaya tingkat konektivitas wilayah dukung tumbuh ekonomi dasar data badan atur jalan tol bpjt catat total jalan tol operasi indonesia kilometer km total jalan capai total jalan tol indonesia sebar wilayah strategis kontribusi signifikan konektivitas nasional kawasan jabodetabek jalan tol capai km tulang punggung mobilitas area metropolitan besar indonesia tol trans jawa bentang km hubung kota utama pulau jawa cepat arus barang tumpang trans jawa tol tol non trans jawa milik total km layan wilayah wilayah jawa sumatera jaring tol trans sumatera km kuat aksesibilitas antarprovinsi pulau kalimantan tol km bantu hubung kawasan kawasan pulau sulawesi milik tol km bal tol km dukung bangun tumbuh ekonomi daerah nya jalan tol panjang indonesia peran mobilitas ekonomi negara tol terbanggi kayu agung peka ruas tol tol trans sumatera hubung provinsi lampung provinsi sumatera selatan capai km tol mudah arus barang orang sumatera salah jalur vital ekonomi pulau tol bakauheni terbanggi bakter tol trans sumatera tol bakter km peran tingkat konektivitas pulau sumatera provinsi lampung jalan tol pendek tempuh bakauheni terbanggi signifikan tol pekanbaru dumai permai provinsi riau tol permai km hubung pekanbaru dumai salah uni tol lintas khusus gajah sumatera infrastruktur ramah lingkung perhati lanjut satwa liar wilayah tol cikampek palimanan cipali km tol cipali tol panjang pulau jawa tol trans jawa hubung cikampek palimanan tol dukung transportasi logistik jawa arus mudik lebaran tol balikpapan samarinda tol kalimantan tol balikpapan samarinda km singkat tempuh kota jam ruas tol dukung kembang ekonomi kalimantan timur tol jakarta merak jamer hubung jakarta merak provinsi banten tol km salah jalan tol sibuk indonesia resmi tol jamer hubung utama jakarta kawasan industri banten tol solo ngawi tol trans jawa tol solo ngawi km hubung solo ngawi jawa timur tol bantu kurang jalan jalur tingkat arus logistik wilayah jawa jawa timur tol ngawi kertosono km tol ngawi kertosono jaring tol trans jawa hubung wilayah ngawi kertosono jawa timur tol main peran kunci dukung transportasi barang tumpang jawa timur tol jakarta cikampek japek km tol jakarta cikampek hubung kota jakarta kawasan industri cikampek provinsi jawa barat tol salah jalur penting distribusi logistik pulau jawa tol jakarta outer ring road i jorr i tol lingkar jakarta km fungsi hubung wilayah jakarta mudah arus lintas kota jalan jalan tol mudah jalan dorong tumbuh ekonomi daerah daerah lalu kembang infrastruktur tol indonesia kuat posisi negara jaring transportasi darat efisien cnbc indonesia research
 </pre></div>
 </div>
 </div>
@@ -1620,6 +958,138 @@ CNBC INDONESIA RESEARCH[email protected]
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;cleaned&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;isi&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;cleaned&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;isi&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">preprocessing</span><span class="p">)</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\pandas\core\series.py:4924,</span> in <span class="ni">Series.apply</span><span class="nt">(self, func, convert_dtype, args, by_row, **kwargs)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4789</span> <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">4790</span>     <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4791</span>     <span class="n">func</span><span class="p">:</span> <span class="n">AggFuncType</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4796</span>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4797</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DataFrame</span> <span class="o">|</span> <span class="n">Series</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">4798</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">4799</span><span class="sd">     Invoke function on values of Series.</span>
+<span class="g g-Whitespace">   </span><span class="mi">4800</span><span class="sd"> </span>
+<span class="sd">   (...)</span>
+<span class="g g-Whitespace">   </span><span class="mi">4915</span><span class="sd">     dtype: float64</span>
+<span class="g g-Whitespace">   </span><span class="mi">4916</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">   </span><span class="mi">4917</span>     <span class="k">return</span> <span class="n">SeriesApply</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">4918</span>         <span class="bp">self</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4919</span>         <span class="n">func</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4920</span>         <span class="n">convert_dtype</span><span class="o">=</span><span class="n">convert_dtype</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4921</span>         <span class="n">by_row</span><span class="o">=</span><span class="n">by_row</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4922</span>         <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
+<span class="g g-Whitespace">   </span><span class="mi">4923</span>         <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="ne">-&gt; </span><span class="mi">4924</span>     <span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\pandas\core\apply.py:1427,</span> in <span class="ni">SeriesApply.apply</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1424</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_compat</span><span class="p">()</span>
+<span class="g g-Whitespace">   </span><span class="mi">1426</span> <span class="c1"># self.func is Callable</span>
+<span class="ne">-&gt; </span><span class="mi">1427</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apply_standard</span><span class="p">()</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\pandas\core\apply.py:1507,</span> in <span class="ni">SeriesApply.apply_standard</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1501</span> <span class="c1"># row-wise access</span>
+<span class="g g-Whitespace">   </span><span class="mi">1502</span> <span class="c1"># apply doesn&#39;t have a `na_action` keyword and for backward compat reasons</span>
+<span class="g g-Whitespace">   </span><span class="mi">1503</span> <span class="c1"># we need to give `na_action=&quot;ignore&quot;` for categorical data.</span>
+<span class="g g-Whitespace">   </span><span class="mi">1504</span> <span class="c1"># TODO: remove the `na_action=&quot;ignore&quot;` when that default has been changed in</span>
+<span class="g g-Whitespace">   </span><span class="mi">1505</span> <span class="c1">#  Categorical (GH51645).</span>
+<span class="g g-Whitespace">   </span><span class="mi">1506</span> <span class="n">action</span> <span class="o">=</span> <span class="s2">&quot;ignore&quot;</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">CategoricalDtype</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+<span class="ne">-&gt; </span><span class="mi">1507</span> <span class="n">mapped</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">_map_values</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1508</span>     <span class="n">mapper</span><span class="o">=</span><span class="n">curried</span><span class="p">,</span> <span class="n">na_action</span><span class="o">=</span><span class="n">action</span><span class="p">,</span> <span class="n">convert</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">convert_dtype</span>
+<span class="g g-Whitespace">   </span><span class="mi">1509</span> <span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1511</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mapped</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mapped</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ABCSeries</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1512</span>     <span class="c1"># GH#43986 Need to do list(mapped) in order to get treated as nested</span>
+<span class="g g-Whitespace">   </span><span class="mi">1513</span>     <span class="c1">#  See also GH#25959 regarding EA support</span>
+<span class="g g-Whitespace">   </span><span class="mi">1514</span>     <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">_constructor_expanddim</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">mapped</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\pandas\core\base.py:921,</span> in <span class="ni">IndexOpsMixin._map_values</span><span class="nt">(self, mapper, na_action, convert)</span>
+<span class="g g-Whitespace">    </span><span class="mi">918</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">ExtensionArray</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">919</span>     <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">mapper</span><span class="p">,</span> <span class="n">na_action</span><span class="o">=</span><span class="n">na_action</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">921</span> <span class="k">return</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">map_array</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">na_action</span><span class="o">=</span><span class="n">na_action</span><span class="p">,</span> <span class="n">convert</span><span class="o">=</span><span class="n">convert</span><span class="p">)</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\pandas\core\algorithms.py:1743,</span> in <span class="ni">map_array</span><span class="nt">(arr, mapper, na_action, convert)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1741</span> <span class="n">values</span> <span class="o">=</span> <span class="n">arr</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1742</span> <span class="k">if</span> <span class="n">na_action</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1743</span>     <span class="k">return</span> <span class="n">lib</span><span class="o">.</span><span class="n">map_infer</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">convert</span><span class="o">=</span><span class="n">convert</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1744</span> <span class="k">else</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1745</span>     <span class="k">return</span> <span class="n">lib</span><span class="o">.</span><span class="n">map_infer_mask</span><span class="p">(</span>
+<span class="g g-Whitespace">   </span><span class="mi">1746</span>         <span class="n">values</span><span class="p">,</span> <span class="n">mapper</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">isna</span><span class="p">(</span><span class="n">values</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">),</span> <span class="n">convert</span><span class="o">=</span><span class="n">convert</span>
+<span class="g g-Whitespace">   </span><span class="mi">1747</span>     <span class="p">)</span>
+
+<span class="nn">File lib.pyx:2972,</span> in <span class="ni">pandas._libs.lib.map_infer</span><span class="nt">()</span>
+
+<span class="nn">Cell In[16], line 4,</span> in <span class="ni">preprocessing</span><span class="nt">(text)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">clean_text</span> <span class="o">=</span> <span class="n">cleansing</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">stopword_text</span> <span class="o">=</span> <span class="n">stopword</span><span class="p">(</span><span class="n">clean_text</span><span class="p">)</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">stemmed_text</span> <span class="o">=</span> <span class="n">stemming_indo</span><span class="p">(</span><span class="n">stopword_text</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="k">return</span> <span class="n">stemmed_text</span>
+
+<span class="nn">Cell In[15], line 4,</span> in <span class="ni">stemming_indo</span><span class="nt">(text)</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">factory</span> <span class="o">=</span> <span class="n">StemmerFactory</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">stemmer</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="n">create_stemmer</span><span class="p">()</span>
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">text</span> <span class="o">=</span> <span class="n">stemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="k">return</span> <span class="n">text</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\CachedStemmer.py:20,</span> in <span class="ni">CachedStemmer.stem</span><span class="nt">(self, text)</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span>     <span class="n">stems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">20</span>     <span class="n">stem</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">delegatedStemmer</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">21</span>     <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">stem</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">22</span>     <span class="n">stems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stem</span><span class="p">)</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Stemmer.py:27,</span> in <span class="ni">Stemmer.stem</span><span class="nt">(self, text)</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span> <span class="n">stems</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">27</span>     <span class="n">stems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stem_word</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+<span class="g g-Whitespace">     </span><span class="mi">29</span> <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">stems</span><span class="p">)</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Stemmer.py:36,</span> in <span class="ni">Stemmer.stem_word</span><span class="nt">(self, word)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stem_plural_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">35</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">36</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">stem_singular_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Stemmer.py:84,</span> in <span class="ni">Stemmer.stem_singular_word</span><span class="nt">(self, word)</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Stem a singular word to its common stem form.&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">83</span> <span class="n">context</span> <span class="o">=</span> <span class="n">Context</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">visitor_provider</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">84</span> <span class="n">context</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">86</span> <span class="k">return</span> <span class="n">context</span><span class="o">.</span><span class="n">result</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:37,</span> in <span class="ni">Context.execute</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">     </span><span class="mi">34</span><span class="w"> </span><span class="sd">&quot;&quot;&quot;Execute stemming process; the result can be retrieved with result&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">36</span> <span class="c1">#step 1 - 5</span>
+<span class="ne">---&gt; </span><span class="mi">37</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_stemming_process</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">39</span> <span class="c1">#step 6</span>
+<span class="g g-Whitespace">     </span><span class="mi">40</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:80,</span> in <span class="ni">Context.start_stemming_process</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">     </span><span class="mi">77</span>     <span class="k">return</span>
+<span class="g g-Whitespace">     </span><span class="mi">79</span> <span class="c1">#step 4, 5</span>
+<span class="ne">---&gt; </span><span class="mi">80</span> <span class="bp">self</span><span class="o">.</span><span class="n">remove_prefixes</span><span class="p">()</span>
+<span class="g g-Whitespace">     </span><span class="mi">81</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">82</span>     <span class="k">return</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:89,</span> in <span class="ni">Context.remove_prefixes</span><span class="nt">(self)</span>
+<span class="g g-Whitespace">     </span><span class="mi">87</span> <span class="k">def</span> <span class="nf">remove_prefixes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">88</span>     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">89</span>         <span class="bp">self</span><span class="o">.</span><span class="n">accept_prefix_visitors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">prefix_pisitors</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">90</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">91</span>             <span class="k">return</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:107,</span> in <span class="ni">Context.accept_prefix_visitors</span><span class="nt">(self, visitors)</span>
+<span class="g g-Whitespace">    </span><span class="mi">104</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_is_stopped</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">105</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span>
+<span class="ne">--&gt; </span><span class="mi">107</span> <span class="k">def</span> <span class="nf">accept_prefix_visitors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitors</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">108</span>     <span class="n">removalCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removals</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">109</span>     <span class="k">for</span> <span class="n">visitor</span> <span class="ow">in</span> <span class="n">visitors</span><span class="p">:</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -1703,7 +1173,7 @@ CNBC INDONESIA RESEARCH[email protected]
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Jakarta, CNBC\xa0Indonesia-Dalam beberapa waktu terakhir, kebutuhan akan air galon di Indonesia menjadi sorotan utama, terutama dalam konteks dampaknya terhadap ekonomi rumah tangga kelas menengah.\nMenurut mantan Menteri Keuangan, Bambang Brodjonegoro, kebiasaan masyarakat Indonesia yang bergantung pada air kemasan, seperti air galon, secara tidak sadar telah menggerus pendapatan rumah tangga, khususnya di kalangan kelas menengah. Hal ini turut memperburuk kondisi ekonomi pasca-pandemi\xa0Covid-19, yang menyebabkan banyak kelas menengah turun ke kelas ekonomi yang lebih rendah.\nPertanyaan pun muncul, apakah Indonesia mampu mengandalkan air keran sebagai sumber air minum layak? Di beberapa negara maju, air keran yang bisa langsung diminum merupakan fasilitas umum yang umum tersedia, sehingga masyarakat tidak perlu mengeluarkan uang ekstra untuk membeli air kemasan.\nMeski begitu, hingga saat ini, di Indonesia, penggunaan air keran sebagai air minum masih belum umum. Namun, ada perkembangan signifikan di Ibu Kota Negara (IKN) Nusantara, di mana proyek penyaluran air keran sudah mulai berjalan. Menteri PUPR, Basuki Hadimuljono, mengungkapkan bahwa fasilitas reservoir dan instalasi pengolahan air minum (IPA) Sepaku siap mendistribusikan air minum dan air bersih ke berbagai kawasan di IKN.\nMeski ada upaya menuju penggunaan air keran di IKN, data menunjukkan bahwa konsumsi air minum dalam kemasan di rumah tangga Indonesia masih tinggi. Selama lima tahun terakhir, permintaan air minum dalam kemasan cenderung meningkat.\nMenurut data Badan Pusat Statistik (BPS), meskipun ada fluktuasi, persentase rumah tangga yang menggunakan air minum dalam kemasan terus mengalami peningkatan, terutama di daerah perkotaan. Hal ini dipicu oleh meningkatnya kesadaran akan kebersihan dan kualitas air minum di kalangan masyarakat.\n\nSelain itu, data menunjukkan bahwa beberapa provinsi di Indonesia mencatat konsumsi air minum dalam kemasan tertinggi.\nPada 2023, DKI Jakarta memimpin dengan 79,39% rumah tangga menggunakan air minum dalam kemasan. Provinsi lainnya seperti Kalimantan Timur, Kepulauan Riau, dan Kalimantan Utara juga menunjukkan tren serupa.\nFaktor utama yang mendorong tingginya konsumsi air kemasan di provinsi-provinsi ini adalah akses yang lebih mudah dan kesadaran akan pentingnya air bersih di tengah pertumbuhan urbanisasi yang pesat.\nPeningkatan konsumsi air minum dalam kemasan ini menimbulkan pertanyaan tentang keberlanjutan dan dampaknya terhadap ekonomi rumah tangga. Sementara itu, upaya pemerintah untuk menyediakan air minum layak melalui infrastruktur air keran, seperti yang sedang dilakukan di IKN, menjadi langkah penting untuk mengurangi ketergantungan masyarakat terhadap air kemasan.\nDengan infrastruktur yang lebih baik, diharapkan masyarakat Indonesia dapat beralih ke sumber air yang lebih efisien dan hemat biaya, tanpa mengorbankan kualitas dan kesehatan.\nAir Galon Jadi Sorotan\nEkonom senior yang merupakan mantan Menteri Keuangan, Bambang Brodjonegoro mengatakan turunnya tingkat ekonomi kelas menengah di Indonesia tidak hanya terjadi karena pandemi Covid-19 dan banyaknya pemutusan hubungan kerja (PHK). Melainkan juga akibat kebiasaan sehari-hari kebutuhan terhadap air galon.\n&quot;Selama ini secara tidak sadar itu sudah menggerus income kita secara lumayan dengan style kita yang mengandalkan semua kepada air galon, air botol dan segala macamnya,&quot; kata Bambang di kantor Kamar Dagang dan Industri (Kadin) Indonesia, Jakarta, dikutip Senin (2/8/2024).Menteri Perencanaan Pembangunan Nasional (PPN)/Kepala Bappenas periode I pemerintahan Presiden Joko Widodo itu menekankan, kebiasaan mengkonsumsi air dalam kemasan tidak terjadi di semua negara.\nDi negara maju misalnya, warga kelas menengah terbiasa menenggak air minum yang disediakan pemerintah di tempat-tempat umum. Dengan adanya fasilitas air minum massal itu, masyarakat negara maju tidak perlu mengeluarkan uang untuk membeli minum.\n&quot;Daya beli kelas menengahnya aman karena untuk air pun mereka tidak perlu mengeluarkan uang terlalu banyak,&quot; kata dia.\nMeski begitu, Bambang mengatakan faktor kebutuhan air minum hanyalah satu dari banyak faktor lain yang menyebabkan banyak kelas menengah turun \&#39;kasta\&#39; ke kelas ekonomi yang lebih rendah. Bambang menduga faktor utama tumbangnya kelas menengah RI adalah pandemi Covid-19.\n&quot;Penyebabnya itu variatif. Karena kan kita lihat datanya dari 2019 ke 2023. Jadi penyebab pertama adalah Covid,&quot; ujar dia.\n\nCNBC INDONESIA RESEARCH[email\xa0protected]\n&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;Jakarta, CNBC\xa0Indonesia-Dalam beberapa waktu terakhir, kebutuhan akan air galon di Indonesia menjadi sorotan utama, terutama dalam konteks dampaknya terhadap ekonomi rumah tangga kelas menengah.\r\nMenurut mantan Menteri Keuangan, Bambang Brodjonegoro, kebiasaan masyarakat Indonesia yang bergantung pada air kemasan, seperti air galon, secara tidak sadar telah menggerus pendapatan rumah tangga, khususnya di kalangan kelas menengah. Hal ini turut memperburuk kondisi ekonomi pasca-pandemi\xa0Covid-19, yang menyebabkan banyak kelas menengah turun ke kelas ekonomi yang lebih rendah.\r\nPertanyaan pun muncul, apakah Indonesia mampu mengandalkan air keran sebagai sumber air minum layak? Di beberapa negara maju, air keran yang bisa langsung diminum merupakan fasilitas umum yang umum tersedia, sehingga masyarakat tidak perlu mengeluarkan uang ekstra untuk membeli air kemasan.\r\nMeski begitu, hingga saat ini, di Indonesia, penggunaan air keran sebagai air minum masih belum umum. Namun, ada perkembangan signifikan di Ibu Kota Negara (IKN) Nusantara, di mana proyek penyaluran air keran sudah mulai berjalan. Menteri PUPR, Basuki Hadimuljono, mengungkapkan bahwa fasilitas reservoir dan instalasi pengolahan air minum (IPA) Sepaku siap mendistribusikan air minum dan air bersih ke berbagai kawasan di IKN.\r\nMeski ada upaya menuju penggunaan air keran di IKN, data menunjukkan bahwa konsumsi air minum dalam kemasan di rumah tangga Indonesia masih tinggi. Selama lima tahun terakhir, permintaan air minum dalam kemasan cenderung meningkat.\r\nMenurut data Badan Pusat Statistik (BPS), meskipun ada fluktuasi, persentase rumah tangga yang menggunakan air minum dalam kemasan terus mengalami peningkatan, terutama di daerah perkotaan. Hal ini dipicu oleh meningkatnya kesadaran akan kebersihan dan kualitas air minum di kalangan masyarakat.\r\n\r\nSelain itu, data menunjukkan bahwa beberapa provinsi di Indonesia mencatat konsumsi air minum dalam kemasan tertinggi.\r\nPada 2023, DKI Jakarta memimpin dengan 79,39% rumah tangga menggunakan air minum dalam kemasan. Provinsi lainnya seperti Kalimantan Timur, Kepulauan Riau, dan Kalimantan Utara juga menunjukkan tren serupa.\r\nFaktor utama yang mendorong tingginya konsumsi air kemasan di provinsi-provinsi ini adalah akses yang lebih mudah dan kesadaran akan pentingnya air bersih di tengah pertumbuhan urbanisasi yang pesat.\r\nPeningkatan konsumsi air minum dalam kemasan ini menimbulkan pertanyaan tentang keberlanjutan dan dampaknya terhadap ekonomi rumah tangga. Sementara itu, upaya pemerintah untuk menyediakan air minum layak melalui infrastruktur air keran, seperti yang sedang dilakukan di IKN, menjadi langkah penting untuk mengurangi ketergantungan masyarakat terhadap air kemasan.\r\nDengan infrastruktur yang lebih baik, diharapkan masyarakat Indonesia dapat beralih ke sumber air yang lebih efisien dan hemat biaya, tanpa mengorbankan kualitas dan kesehatan.\r\nAir Galon Jadi Sorotan\r\nEkonom senior yang merupakan mantan Menteri Keuangan, Bambang Brodjonegoro mengatakan turunnya tingkat ekonomi kelas menengah di Indonesia tidak hanya terjadi karena pandemi Covid-19 dan banyaknya pemutusan hubungan kerja (PHK). Melainkan juga akibat kebiasaan sehari-hari kebutuhan terhadap air galon.\r\n&quot;Selama ini secara tidak sadar itu sudah menggerus income kita secara lumayan dengan style kita yang mengandalkan semua kepada air galon, air botol dan segala macamnya,&quot; kata Bambang di kantor Kamar Dagang dan Industri (Kadin) Indonesia, Jakarta, dikutip Senin (2/8/2024).Menteri Perencanaan Pembangunan Nasional (PPN)/Kepala Bappenas periode I pemerintahan Presiden Joko Widodo itu menekankan, kebiasaan mengkonsumsi air dalam kemasan tidak terjadi di semua negara.\r\nDi negara maju misalnya, warga kelas menengah terbiasa menenggak air minum yang disediakan pemerintah di tempat-tempat umum. Dengan adanya fasilitas air minum massal itu, masyarakat negara maju tidak perlu mengeluarkan uang untuk membeli minum.\r\n&quot;Daya beli kelas menengahnya aman karena untuk air pun mereka tidak perlu mengeluarkan uang terlalu banyak,&quot; kata dia.\r\nMeski begitu, Bambang mengatakan faktor kebutuhan air minum hanyalah satu dari banyak faktor lain yang menyebabkan banyak kelas menengah turun \&#39;kasta\&#39; ke kelas ekonomi yang lebih rendah. Bambang menduga faktor utama tumbangnya kelas menengah RI adalah pandemi Covid-19.\r\n&quot;Penyebabnya itu variatif. Karena kan kita lihat datanya dari 2019 ke 2023. Jadi penyebab pertama adalah Covid,&quot; ujar dia.\r\n\r\nCNBC INDONESIA RESEARCH[email\xa0protected]\r\n&#39;
 </pre></div>
 </div>
 </div>
@@ -1735,8 +1205,13 @@ CNBC INDONESIA RESEARCH[email protected]
 	<span class="n">df_tfidf</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Kategori Berita&#39;</span><span class="p">,</span> <span class="n">kategori</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
 	<span class="k">return</span> <span class="n">tfidf</span><span class="p">,</span> <span class="n">df_tfidf</span>
-
-<span class="n">tfidf</span><span class="p">,</span> <span class="n">df_tfidf</span> <span class="o">=</span> <span class="n">tfidf_vsm</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;cleaned&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf</span><span class="p">,</span> <span class="n">df_tfidf</span> <span class="o">=</span> <span class="n">tfidf_vsm</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;cleaned&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -2152,7 +1627,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
 }
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>TfidfVectorizer()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;TfidfVectorizer<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.5/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html">?<span>Documentation for TfidfVectorizer</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>TfidfVectorizer()</pre></div> </div></div></div></div></div></div>
+</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>TfidfVectorizer()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;TfidfVectorizer<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html">?<span>Documentation for TfidfVectorizer</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>TfidfVectorizer()</pre></div> </div></div></div></div></div></div>
 </div>
 <section id="save-dataset">
 <h4>Save Dataset<a class="headerlink" href="#save-dataset" title="Link to this heading">#</a></h4>
@@ -2565,8 +2040,9 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modelling-svm">Modelling SVM</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepocessing">Prepocessing</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cleansing-function">Cleansing Function</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#beberapa-fungsi-yang-digunakan-untuk-mengolah-dataset-kata">Beberapa FUngsi yang digunakan untuk mengolah dataset kata</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-clean-text">Fungsi clean text</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-remove-stopword">Fungsi Remove Stopword</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-stemming">Fungsi Stemming</a></li>
 </ul>
 </li>
