@@ -401,7 +401,8 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-stemming">Fungsi Stemming</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perhitungan-tf-idf">Perhitungan TF-IDF</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perhitungan-tf-idf">Perhitungan TF-IDF</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengacak-data">Mengacak Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#save-dataset">Save Dataset</a></li>
 </ul>
 </li>
@@ -905,40 +906,14 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jakarta, CNBC Indonesia-Indonesia terus memperluas jaringan tol sebagai bagian dari upaya untuk meningkatkan konektivitas antar wilayah dan mendukung pertumbuhan ekonomi.
-Berdasarkan Data Badan Pengaturan Jalan Tol (BPJT) sejak 1978 hingga 2024 mencatat total panjang jalan tol yang beroperasi di Indonesia sepanjang 2.839 kilometer (Km), dengan total jalan mencapai 73 .
-Total panjang jalan tol di Indonesia tersebar di beberapa wilayah strategis dengan kontribusi signifikan terhadap konektivitas nasional. Di kawasan Jabodetabek, panjang jalan tol mencapai 354,39 km, menjadi tulang punggung mobilitas di area metropolitan terbesar di Indonesia.
-
-Sementara itu, Tol Trans Jawa membentang sepanjang 1.065,5 km, menghubungkan berbagai kota utama di Pulau Jawa dan mempercepat arus barang dan penumpang.
-Di luar Trans Jawa, tol-tol non-Trans Jawa memiliki panjang total 367,98 km, melayani wilayah-wilayah penting lainnya di Jawa. Di Sumatera, jaringan Tol Trans Sumatera sepanjang 884,45 km memperkuat aksesibilitas antarprovinsi di pulau tersebut.
-Di Kalimantan, tol sepanjang 97,27 km membantu menghubungkan kawasan-kawasan penting di pulau itu, sementara Sulawesi memiliki tol sepanjang 61,46 km dan Bali dengan tol sepanjang 10,07 km, masing-masing mendukung pembangunan dan pertumbuhan ekonomi di daerah-nya.
-Berikut adalah 10 jalan tol terpanjang di Indonesia yang berperan penting dalam mobilitas dan perekonomian negara :
-1. Tol Terbanggi Besar - Kayu Agung (Terpeka)
-Ruas tol ini merupakan bagian dari Tol Trans Sumatera, menghubungkan Provinsi Lampung dengan Provinsi Sumatera Selatan dengan panjang mencapai 189,4 km. Tol ini mempermudah arus barang dan orang di Sumatera dan telah menjadi salah satu jalur vital bagi perekonomian pulau tersebut.
-2. Tol Bakauheni - Terbanggi Besar (Bakter)
-Masih di Tol Trans Sumatera, Tol Bakter sepanjang 140,9 km ini juga berperan penting dalam meningkatkan konektivitas di Pulau Sumatera, khususnya di Provinsi Lampung.
-Jalan tol ini memperpendek waktu tempuh antara Bakauheni dan Terbanggi Besar secara signifikan.
-3. Tol Pekanbaru - Dumai (Permai)
-Berada di Provinsi Riau, Tol Permai sepanjang 131,5 km menghubungkan Pekanbaru dengan Dumai.
-Salah satu keunikan tol ini adalah adanya perlintasan khusus untuk gajah Sumatera, sebuah infrastruktur yang ramah lingkungan dan memperhatikan keberlanjutan satwa liar di wilayah tersebut.
-4. Tol Cikampek - Palimanan (Cipali)
-Dengan panjang 116,8 km, Tol Cipali adalah tol terpanjang di Pulau Jawa dan menjadi bagian dari Tol Trans Jawa yang menghubungkan Cikampek dengan Palimanan.
-Tol ini sangat penting dalam mendukung transportasi dan logistik di Jawa, terutama saat arus mudik lebaran.
-5. Tol Balikpapan - Samarinda
-Merupakan tol pertama di Kalimantan, Tol Balikpapan-Samarinda sepanjang 99 km mempersingkat waktu tempuh antara kedua kota hingga dua jam. Ruas tol ini mendukung pengembangan ekonomi di Kalimantan Timur.
-6. Tol Jakarta - Merak (Jamer)
-Menghubungkan Jakarta dengan Merak di Provinsi Banten, tol sepanjang 98 km ini adalah salah satu jalan tol tersibuk di Indonesia. Sejak diresmikan pada tahun 1984, Tol Jamer telah menjadi penghubung utama antara Jakarta dan berbagai kawasan industri di Banten.
-7. Tol Solo - Ngawi
-Bagian dari Tol Trans Jawa, Tol Solo-Ngawi sepanjang 90,4 km menghubungkan Solo dengan Ngawi di Jawa Timur. Tol ini membantu mengurangi waktu perjalanan di jalur tersebut dan meningkatkan arus logistik di wilayah Jawa Tengah dan Jawa Timur.
-8. Tol Ngawi - Kertosono
-Dengan panjang 87 km, Tol Ngawi-Kertosono juga merupakan bagian dari jaringan Tol Trans Jawa yang menghubungkan wilayah Ngawi dengan Kertosono di Jawa Timur. Tol ini memainkan peran kunci dalam mendukung transportasi barang dan penumpang di Jawa Timur.
-9. Tol Jakarta - Cikampek (Japek)
-Sepanjang 83 km, Tol Jakarta-Cikampek menghubungkan ibu kota Jakarta dengan kawasan industri di Cikampek, Provinsi Jawa Barat. Tol ini merupakan salah satu jalur terpenting bagi distribusi logistik di Pulau Jawa.
-10. Tol Jakarta Outer Ring Road I (JORR I)
-Tol lingkar luar pertama Jakarta sepanjang 64 km ini berfungsi sebagai penghubung antara berbagai wilayah di Jakarta, memudahkan arus lalu lintas dari dan menuju ibu kota
-Jalan-jalan tol ini tidak hanya memudahkan perjalanan, tetapi juga mendorong pertumbuhan ekonomi di daerah-daerah yang dilaluinya.
-Dengan terus berkembangnya infrastruktur tol, Indonesia semakin memperkuat posisinya sebagai negara dengan jaringan transportasi darat yang semakin efisien.
-CNBC INDONESIA RESEARCH
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jakarta, CNBC Indonesia- Menteri Keuangan Sri Mulyani Indrawati menemui presiden terpilih Prabowo Subianto, Senin (9/9/2024). Sri Mulyani didampingi oleh Wakil Menteri Keuangan II Thomas Djiwandono. Keduanya melaporkan perkembangan APBN kepada Prabowo.
+&quot;Pertama mengenai pelaksanaan APBN 2024 dan outlooknya yang akan ditutup Desember 2024 dibawah Presiden Terpilih - dengan demikian beliau mengetahui detail perkembangan pelaksanaan APBN yang sedang berjalan,&quot; ungkap Sri Mulyani, lewat unggahan di Instagram pribadinya.
+Pertemuan ketiganya berlangsung akrab. Sri Mulyani, Thomas, dan Prabowo bahkan terlihat tertawa bersama dalam foto yang diunggah ke Instagram.
+Dalam pertemuan itu, Sri Mulyani juga melaporkan perkembangan pembahasan RUU RAPBN 2025 di DPR dan arahan-arahan presiden terpilih mengenai berbagai usulan program dan anggaran yang disediakan.
+&quot;Arahan beliau sesuai program prioritas yang akan dicapai dalam Pemerintahan Baru 2024-2029.&quot;
+Menurut Sri Mulyani, pertemuannya dengan Prabowo berlangsung sangat baik karena mereka mendiskusikan banyak hal secara efektif.
+Saat ini, banyak rumor beredar soal siapa sosok menteri keuangan di era Prabowo. Sampai sejauh ini, ada sejumlah nama yang dikabarkan menjadi calon kuat menteri keuangan, namun nama Sri Mulyani tidak masuk dalam rumor tersebut.
+Pertemuan hari ini seolah menjadi kode keras yang membuat banyak pihak berspekulasi soal kemungkinan Sri Mulyani lanjut menjadi menteri keuangan di era Prabowo.
 </pre></div>
 </div>
 </div>
@@ -950,7 +925,7 @@ CNBC INDONESIA RESEARCH
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>jakarta cnbc indonesia indonesia luas jaring tol upaya tingkat konektivitas wilayah dukung tumbuh ekonomi dasar data badan atur jalan tol bpjt catat total jalan tol operasi indonesia kilometer km total jalan capai total jalan tol indonesia sebar wilayah strategis kontribusi signifikan konektivitas nasional kawasan jabodetabek jalan tol capai km tulang punggung mobilitas area metropolitan besar indonesia tol trans jawa bentang km hubung kota utama pulau jawa cepat arus barang tumpang trans jawa tol tol non trans jawa milik total km layan wilayah wilayah jawa sumatera jaring tol trans sumatera km kuat aksesibilitas antarprovinsi pulau kalimantan tol km bantu hubung kawasan kawasan pulau sulawesi milik tol km bal tol km dukung bangun tumbuh ekonomi daerah nya jalan tol panjang indonesia peran mobilitas ekonomi negara tol terbanggi kayu agung peka ruas tol tol trans sumatera hubung provinsi lampung provinsi sumatera selatan capai km tol mudah arus barang orang sumatera salah jalur vital ekonomi pulau tol bakauheni terbanggi bakter tol trans sumatera tol bakter km peran tingkat konektivitas pulau sumatera provinsi lampung jalan tol pendek tempuh bakauheni terbanggi signifikan tol pekanbaru dumai permai provinsi riau tol permai km hubung pekanbaru dumai salah uni tol lintas khusus gajah sumatera infrastruktur ramah lingkung perhati lanjut satwa liar wilayah tol cikampek palimanan cipali km tol cipali tol panjang pulau jawa tol trans jawa hubung cikampek palimanan tol dukung transportasi logistik jawa arus mudik lebaran tol balikpapan samarinda tol kalimantan tol balikpapan samarinda km singkat tempuh kota jam ruas tol dukung kembang ekonomi kalimantan timur tol jakarta merak jamer hubung jakarta merak provinsi banten tol km salah jalan tol sibuk indonesia resmi tol jamer hubung utama jakarta kawasan industri banten tol solo ngawi tol trans jawa tol solo ngawi km hubung solo ngawi jawa timur tol bantu kurang jalan jalur tingkat arus logistik wilayah jawa jawa timur tol ngawi kertosono km tol ngawi kertosono jaring tol trans jawa hubung wilayah ngawi kertosono jawa timur tol main peran kunci dukung transportasi barang tumpang jawa timur tol jakarta cikampek japek km tol jakarta cikampek hubung kota jakarta kawasan industri cikampek provinsi jawa barat tol salah jalur penting distribusi logistik pulau jawa tol jakarta outer ring road i jorr i tol lingkar jakarta km fungsi hubung wilayah jakarta mudah arus lintas kota jalan jalan tol mudah jalan dorong tumbuh ekonomi daerah daerah lalu kembang infrastruktur tol indonesia kuat posisi negara jaring transportasi darat efisien cnbc indonesia research
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>jakarta cnbc indonesia menteri uang sri mulyani indrawati temu presiden pilih prabowo subianto senin sri mulyani damping wakil menteri uang ii thomas djiwandono lapor kembang apbn prabowo laksana apbn outlooknya tutup desember bawah presiden pilih beliau detail kembang laksana apbn jalan sri mulyani unggah instagram pribadi temu tiga akrab sri mulyani thomas prabowo tertawa foto unggah instagram temu sri mulyani lapor kembang bahas ruu rapbn dpr arah arah presiden pilih usul program anggar sedia arah beliau sesuai program prioritas capai perintah sri mulyani temu prabowo diskusi efektif rumor edar sosok menteri uang era prabowo nama kabar calon kuat menteri uang nama sri mulyani masuk rumor temu kode keras spekulasi sri mulyani menteri uang era prabowo
 </pre></div>
 </div>
 </div>
@@ -1082,12 +1057,36 @@ CNBC INDONESIA RESEARCH
 <span class="g g-Whitespace">     </span><span class="mi">90</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
 <span class="g g-Whitespace">     </span><span class="mi">91</span>             <span class="k">return</span>
 
-<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:107,</span> in <span class="ni">Context.accept_prefix_visitors</span><span class="nt">(self, visitors)</span>
-<span class="g g-Whitespace">    </span><span class="mi">104</span>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_is_stopped</span><span class="p">:</span>
-<span class="g g-Whitespace">    </span><span class="mi">105</span>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span>
-<span class="ne">--&gt; </span><span class="mi">107</span> <span class="k">def</span> <span class="nf">accept_prefix_visitors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitors</span><span class="p">):</span>
-<span class="g g-Whitespace">    </span><span class="mi">108</span>     <span class="n">removalCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removals</span><span class="p">)</span>
-<span class="g g-Whitespace">    </span><span class="mi">109</span>     <span class="k">for</span> <span class="n">visitor</span> <span class="ow">in</span> <span class="n">visitors</span><span class="p">:</span>
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:110,</span> in <span class="ni">Context.accept_prefix_visitors</span><span class="nt">(self, visitors)</span>
+<span class="g g-Whitespace">    </span><span class="mi">108</span> <span class="n">removalCount</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">removals</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">109</span> <span class="k">for</span> <span class="n">visitor</span> <span class="ow">in</span> <span class="n">visitors</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">110</span>     <span class="bp">self</span><span class="o">.</span><span class="n">accept</span><span class="p">(</span><span class="n">visitor</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">111</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">112</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:97,</span> in <span class="ni">Context.accept</span><span class="nt">(self, visitor)</span>
+<span class="g g-Whitespace">     </span><span class="mi">96</span> <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitor</span><span class="p">):</span>
+<span class="ne">---&gt; </span><span class="mi">97</span>     <span class="n">visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Visitor\AbstractDisambiguatePrefixRule.py:14,</span> in <span class="ni">AbstractDisambiguatePrefixRule.visit</span><span class="nt">(self, context)</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="k">for</span> <span class="n">disambiguator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">disambiguators</span><span class="p">:</span>
+<span class="ne">---&gt; </span><span class="mi">14</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">disambiguator</span><span class="o">.</span><span class="n">disambiguate</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span>         <span class="k">break</span>
+
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Morphology\Disambiguator\DisambiguatorPrefixRule31.py:22,</span> in <span class="ni">DisambiguatorPrefixRule31b.disambiguate</span><span class="nt">(self, word)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="k">class</span> <span class="nc">DisambiguatorPrefixRule31b</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">17</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Disambiguate Prefix Rule 31b</span>
+<span class="g g-Whitespace">     </span><span class="mi">18</span><span class="sd">     Original Rule 31 : penyV -&gt; peny-sV</span>
+<span class="g g-Whitespace">     </span><span class="mi">19</span><span class="sd">     Modified by CC, shifted to 31b</span>
+<span class="g g-Whitespace">     </span><span class="mi">20</span><span class="sd">     &quot;&quot;&quot;</span>
+<span class="ne">---&gt; </span><span class="mi">22</span>     <span class="k">def</span> <span class="nf">disambiguate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">23</span><span class="w">         </span><span class="sd">&quot;&quot;&quot;Disambiguate Prefix Rule 31b</span>
+<span class="g g-Whitespace">     </span><span class="mi">24</span><span class="sd">         Original Rule 31 : penyV -&gt; peny-sV</span>
+<span class="g g-Whitespace">     </span><span class="mi">25</span><span class="sd">         Modified by CC, shifted to 31b</span>
+<span class="g g-Whitespace">     </span><span class="mi">26</span><span class="sd">         &quot;&quot;&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">27</span>         <span class="n">matches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^peny([aiueo])(.*)$&#39;</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
@@ -1194,6 +1193,185 @@ CNBC INDONESIA RESEARCH
 </section>
 <section id="perhitungan-tf-idf">
 <h3>Perhitungan TF-IDF<a class="headerlink" href="#perhitungan-tf-idf" title="Link to this heading">#</a></h3>
+</section>
+<section id="mengacak-data">
+<h3>Mengacak Data<a class="headerlink" href="#mengacak-data" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>isi</th>
+      <th>kategori</th>
+      <th>cleaned</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Jakarta, CNBC Indonesia-Dalam beberapa waktu t...</td>
+      <td>Research</td>
+      <td>jakarta cnbc indonesia butuh air galon indones...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Jakarta, CNBC Indonesia - Presiden Republik In...</td>
+      <td>News</td>
+      <td>jakarta cnbc indonesia presiden republik indon...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Jakarta, CNBC Indonesia -Tim nasional (timnas)...</td>
+      <td>Research</td>
+      <td>jakarta cnbc indonesia tim nasional timnas sep...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Jakarta, CNBC Indonesia -Bisnis air mineral ke...</td>
+      <td>Research</td>
+      <td>jakarta cnbc indonesia bisnis air mineral kema...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Jakarta, CNBC Indonesia-Ekonom senior Institut...</td>
+      <td>News</td>
+      <td>jakarta cnbc indonesia ekonom senior institute...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_train</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:</span><span class="mi">80</span><span class="p">]</span>
+<span class="n">data_test</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">80</span><span class="p">:]</span>
+<span class="n">data_train</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>isi</th>
+      <th>kategori</th>
+      <th>cleaned</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Jakarta,CNBC Indonesia-Gaharu, juga dikenal se...</td>
+      <td>Research</td>
+      <td>jakarta cnbc indonesia gaharu kenal agarwood j...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Jakarta, CNBC Indonesia- Badan Meteorologi, Kl...</td>
+      <td>News</td>
+      <td>jakarta cnbc indonesia badan meteorologi klima...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Jakarta, CNBC Indonesia -Pasar keuangan RI pad...</td>
+      <td>Research</td>
+      <td>jakarta cnbc indonesia pasar uang ri pekan ger...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Jakarta, CNBC Indonesia -Arus dana asing untuk...</td>
+      <td>Research</td>
+      <td>jakarta cnbc indonesia arus dana asing kali ca...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Jakarta, CNBC Indonesia -Wafatnya salah satu E...</td>
+      <td>Research</td>
+      <td>jakarta cnbc indonesia wafat salah ekonom seni...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Jakarta,CNBC Indonesia-Emiten perbankan yang t...</td>
+      <td>Research</td>
+      <td>jakarta cnbc indonesia emiten perban gabung hi...</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Jakarta, CNBC Indonesia -Tim nasional (timnas)...</td>
+      <td>Research</td>
+      <td>jakarta cnbc indonesia tim nasional timnas sep...</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>Jakarta, CNBC Indonesia -Paus Fransiskus akan ...</td>
+      <td>Research</td>
+      <td>jakarta cnbc indonesia paus fransiskus sambang...</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>Jakarta, CNBC Indonesia-Ekonom senior Institut...</td>
+      <td>News</td>
+      <td>jakarta cnbc indonesia ekonom senior institute...</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>Jakarta, CNBC Indonesia -Wakil Presiden period...</td>
+      <td>News</td>
+      <td>jakarta cnbc indonesia wakil presiden periode ...</td>
+    </tr>
+  </tbody>
+</table>
+<p>80 rows × 3 columns</p>
+</div></div></div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tfidf_vsm</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">kategori</span><span class="p">):</span>
@@ -1205,435 +1383,31 @@ CNBC INDONESIA RESEARCH
 	<span class="n">df_tfidf</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Kategori Berita&#39;</span><span class="p">,</span> <span class="n">kategori</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
 	<span class="k">return</span> <span class="n">tfidf</span><span class="p">,</span> <span class="n">df_tfidf</span>
+
+<span class="n">tfidf_model</span><span class="p">,</span> <span class="n">df_tfidf</span> <span class="o">=</span> <span class="n">tfidf_vsm</span><span class="p">(</span><span class="n">data_train</span><span class="p">[</span><span class="s1">&#39;cleaned&#39;</span><span class="p">],</span> <span class="n">data_train</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf</span><span class="p">,</span> <span class="n">df_tfidf</span> <span class="o">=</span> <span class="n">tfidf_vsm</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;cleaned&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">model_tf_idf</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">kategori</span><span class="p">):</span>
+	<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+	<span class="n">feature_names</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">()</span>
+	
+	<span class="n">df_tfidf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">feature_names</span><span class="p">)</span>
+	<span class="n">df_tfidf</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Kategori Berita&#39;</span><span class="p">,</span> <span class="n">kategori</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+	<span class="k">return</span> <span class="n">df_tfidf</span>
+
+<span class="n">df_tfidf_test</span> <span class="o">=</span> <span class="n">model_tf_idf</span><span class="p">(</span><span class="n">data_test</span><span class="p">[</span><span class="s1">&#39;cleaned&#39;</span><span class="p">],</span> <span class="n">tfidf_model</span><span class="p">,</span> <span class="n">data_test</span><span class="p">[</span><span class="s1">&#39;kategori&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-1 {
-  /* Definition of color scheme common for light and dark mode */
-  --sklearn-color-text: black;
-  --sklearn-color-line: gray;
-  /* Definition of color scheme for unfitted estimators */
-  --sklearn-color-unfitted-level-0: #fff5e6;
-  --sklearn-color-unfitted-level-1: #f6e4d2;
-  --sklearn-color-unfitted-level-2: #ffe0b3;
-  --sklearn-color-unfitted-level-3: chocolate;
-  /* Definition of color scheme for fitted estimators */
-  --sklearn-color-fitted-level-0: #f0f8ff;
-  --sklearn-color-fitted-level-1: #d4ebff;
-  --sklearn-color-fitted-level-2: #b3dbfd;
-  --sklearn-color-fitted-level-3: cornflowerblue;
-
-  /* Specific color for light theme */
-  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
-  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
-  --sklearn-color-icon: #696969;
-
-  @media (prefers-color-scheme: dark) {
-    /* Redefinition of color scheme for dark theme */
-    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
-    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
-    --sklearn-color-icon: #878787;
-  }
-}
-
-#sk-container-id-1 {
-  color: var(--sklearn-color-text);
-}
-
-#sk-container-id-1 pre {
-  padding: 0;
-}
-
-#sk-container-id-1 input.sk-hidden--visually {
-  border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-
-#sk-container-id-1 div.sk-dashed-wrapped {
-  border: 1px dashed var(--sklearn-color-line);
-  margin: 0 0.4em 0.5em 0.4em;
-  box-sizing: border-box;
-  padding-bottom: 0.4em;
-  background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-1 div.sk-container {
-  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
-     but bootstrap.min.css set `[hidden] { display: none !important; }`
-     so we also need the `!important` here to be able to override the
-     default hidden behavior on the sphinx rendered scikit-learn.org.
-     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
-  display: inline-block !important;
-  position: relative;
-}
-
-#sk-container-id-1 div.sk-text-repr-fallback {
-  display: none;
-}
-
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-  /* draw centered vertical line to link estimators */
-  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-  background-size: 2px 100%;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-/* Parallel-specific style estimator block */
-
-#sk-container-id-1 div.sk-parallel-item::after {
-  content: "";
-  width: 100%;
-  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-  flex-grow: 1;
-}
-
-#sk-container-id-1 div.sk-parallel {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-  background-color: var(--sklearn-color-background);
-  position: relative;
-}
-
-#sk-container-id-1 div.sk-parallel-item {
-  display: flex;
-  flex-direction: column;
-}
-
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
-  align-self: flex-end;
-  width: 50%;
-}
-
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
-  align-self: flex-start;
-  width: 50%;
-}
-
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
-  width: 0;
-}
-
-/* Serial-specific style estimator block */
-
-#sk-container-id-1 div.sk-serial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: var(--sklearn-color-background);
-  padding-right: 1em;
-  padding-left: 1em;
-}
-
-
-/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
-clickable and can be expanded/collapsed.
-- Pipeline and ColumnTransformer use this feature and define the default style
-- Estimators will overwrite some part of the style using the `sk-estimator` class
-*/
-
-/* Pipeline and ColumnTransformer style (default) */
-
-#sk-container-id-1 div.sk-toggleable {
-  /* Default theme specific background. It is overwritten whether we have a
-  specific estimator or a Pipeline/ColumnTransformer */
-  background-color: var(--sklearn-color-background);
-}
-
-/* Toggleable label */
-#sk-container-id-1 label.sk-toggleable__label {
-  cursor: pointer;
-  display: block;
-  width: 100%;
-  margin-bottom: 0;
-  padding: 0.5em;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
-  /* Arrow on the left of the label */
-  content: "▸";
-  float: left;
-  margin-right: 0.25em;
-  color: var(--sklearn-color-icon);
-}
-
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
-  color: var(--sklearn-color-text);
-}
-
-/* Toggleable content - dropdown */
-
-#sk-container-id-1 div.sk-toggleable__content {
-  max-height: 0;
-  max-width: 0;
-  overflow: hidden;
-  text-align: left;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content pre {
-  margin: 0.2em;
-  border-radius: 0.25em;
-  color: var(--sklearn-color-text);
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
-  /* unfitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-  /* Expand drop-down */
-  max-height: 200px;
-  max-width: 100%;
-  overflow: auto;
-}
-
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-  content: "▾";
-}
-
-/* Pipeline/ColumnTransformer-specific style */
-
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator-specific style */
-
-/* Colorize estimator box */
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
-  /* The background is the default theme color */
-  color: var(--sklearn-color-text-on-default-background);
-}
-
-/* On hover, darken the color of the background */
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-/* Label box, darken color on hover, fitted */
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-  color: var(--sklearn-color-text);
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Estimator label */
-
-#sk-container-id-1 div.sk-label label {
-  font-family: monospace;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 1.2em;
-}
-
-#sk-container-id-1 div.sk-label-container {
-  text-align: center;
-}
-
-/* Estimator-specific */
-#sk-container-id-1 div.sk-estimator {
-  font-family: monospace;
-  border: 1px dotted var(--sklearn-color-border-box);
-  border-radius: 0.25em;
-  box-sizing: border-box;
-  margin-bottom: 0.5em;
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-0);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-0);
-}
-
-/* on hover */
-#sk-container-id-1 div.sk-estimator:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-estimator.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-2);
-}
-
-/* Specification for estimator info (e.g. "i" and "?") */
-
-/* Common style for "i" and "?" */
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-  float: right;
-  font-size: smaller;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1em;
-  height: 1em;
-  width: 1em;
-  text-decoration: none !important;
-  margin-left: 1ex;
-  /* unfitted */
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-  color: var(--sklearn-color-unfitted-level-1);
-}
-
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-/* Span, style for the box shown on hovering the info icon */
-.sk-estimator-doc-link span {
-  display: none;
-  z-index: 9999;
-  position: relative;
-  font-weight: normal;
-  right: .2ex;
-  padding: .5ex;
-  margin: .5ex;
-  width: min-content;
-  min-width: 20ex;
-  max-width: 50ex;
-  color: var(--sklearn-color-text);
-  box-shadow: 2pt 2pt 4pt #999;
-  /* unfitted */
-  background: var(--sklearn-color-unfitted-level-0);
-  border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-
-.sk-estimator-doc-link.fitted span {
-  /* fitted */
-  background: var(--sklearn-color-fitted-level-0);
-  border: var(--sklearn-color-fitted-level-3);
-}
-
-.sk-estimator-doc-link:hover span {
-  display: block;
-}
-
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-1 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>TfidfVectorizer()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow fitted">&nbsp;&nbsp;TfidfVectorizer<a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.4/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html">?<span>Documentation for TfidfVectorizer</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></label><div class="sk-toggleable__content fitted"><pre>TfidfVectorizer()</pre></div> </div></div></div></div></div></div>
-</div>
-<section id="save-dataset">
-<h4>Save Dataset<a class="headerlink" href="#save-dataset" title="Link to this heading">#</a></h4>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_tfidf</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_tfidf_test</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1667,6 +1441,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
       <th>029</th>
       <th>03</th>
       <th>...</th>
+      <th>zalewski</th>
       <th>zamrud</th>
       <th>zaner</th>
       <th>zenix</th>
@@ -1676,29 +1451,28 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
       <th>zonamegathrustbukanlah</th>
       <th>zonamegathrusttersebut</th>
       <th>zonamegathrustyang</th>
-      <th>zone</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Research</td>
-      <td>0.0</td>
+      <td>News</td>
+      <td>0.000000</td>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1707,22 +1481,22 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     <tr>
       <th>1</th>
       <td>News</td>
-      <td>0.0</td>
-      <td>0.02529</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
       <td>0.000000</td>
+      <td>0.04248</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1731,22 +1505,22 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     <tr>
       <th>2</th>
       <td>Research</td>
-      <td>0.0</td>
+      <td>0.171637</td>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.053823</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1754,23 +1528,23 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     </tr>
     <tr>
       <th>3</th>
-      <td>Research</td>
-      <td>0.0</td>
+      <td>News</td>
+      <td>0.000000</td>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
+      <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1779,166 +1553,22 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     <tr>
       <th>4</th>
       <td>News</td>
-      <td>0.0</td>
+      <td>0.000000</td>
       <td>0.00000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.032075</td>
       <td>0.0</td>
-      <td>0.036338</td>
+      <td>0.0</td>
+      <td>0.0</td>
       <td>...</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
-      <td>0.000000</td>
       <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-    </tr>
-    <tr>
-      <th>95</th>
-      <td>Research</td>
-      <td>0.0</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>96</th>
-      <td>Research</td>
-      <td>0.0</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>97</th>
-      <td>News</td>
-      <td>0.0</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>98</th>
-      <td>Research</td>
-      <td>0.0</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>99</th>
-      <td>News</td>
-      <td>0.0</td>
-      <td>0.00000</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>0.0</td>
-      <td>0.000000</td>
-      <td>...</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.000000</td>
       <td>0.0</td>
       <td>0.0</td>
       <td>0.0</td>
@@ -1946,12 +1576,30 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     </tr>
   </tbody>
 </table>
-<p>100 rows × 4439 columns</p>
+<p>5 rows × 3969 columns</p>
 </div></div></div>
+</div>
+<section id="save-dataset">
+<h4>Save Dataset<a class="headerlink" href="#save-dataset" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_tfidf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data_train_vsm.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_tfidf_test</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data_test_vsm.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_tfidf</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data_vsm.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;tfidf_model.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">tfidf_model</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -2046,7 +1694,8 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fungsi-stemming">Fungsi Stemming</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perhitungan-tf-idf">Perhitungan TF-IDF</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perhitungan-tf-idf">Perhitungan TF-IDF</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengacak-data">Mengacak Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#save-dataset">Save Dataset</a></li>
 </ul>
 </li>
