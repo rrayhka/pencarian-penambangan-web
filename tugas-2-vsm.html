@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Modelling Vector Space Model &#8212; PPW</title>
+    <title>2. Modelling Vector Space Model &#8212; PPW</title>
   
   
   
@@ -62,8 +62,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'tugas-2-vsm';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression" href="tugas-3-logit.html" />
-    <link rel="prev" title="Crawling Web Berita CNBC Indonesia" href="tugas-1-crawling.html" />
+    <link rel="next" title="3. Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression" href="tugas-3-logit.html" />
+    <link rel="prev" title="1. Crawling Web Berita CNBC Indonesia" href="tugas-1-crawling.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -176,11 +176,11 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="tugas-1-crawling.html">Crawling Web Berita CNBC Indonesia</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modelling Vector Space Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tugas-3-logit.html">Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tugas-4-ringkasanBerita.html">Ringkasan Berita</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tugas-5-keyword-extraction.html">Kata Kunci Berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tugas-1-crawling.html">1. Crawling Web Berita CNBC Indonesia</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. Modelling Vector Space Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tugas-3-logit.html">3. Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tugas-4-ringkasanBerita.html">4. Ringkasan Berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tugas-5-keyword-extraction.html">5. Kata Kunci Berita</a></li>
 </ul>
 
     </div>
@@ -366,7 +366,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Modelling Vector Space Model</h1>
+    <h1>2. Modelling Vector Space Model</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -416,7 +416,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="modelling-vector-space-model">
-<h1>Modelling Vector Space Model<a class="headerlink" href="#modelling-vector-space-model" title="Link to this heading">#</a></h1>
+<h1>2. Modelling Vector Space Model<a class="headerlink" href="#modelling-vector-space-model" title="Link to this heading">#</a></h1>
 <section id="apa-itu-vector-space-model">
 <h2>Apa itu Vector Space Model<a class="headerlink" href="#apa-itu-vector-space-model" title="Link to this heading">#</a></h2>
 <p>Vector Space Model (VSM) adalah model matematika yang digunakan untuk merepresentasikan dokumen teks sebagai vektor dari identifikator (seperti kata-kata atau token). Model ini adalah bagian fundamental dalam sistem informasi pencarian dan teknik pemrosesan bahasa alami untuk menilai dan mengurutkan dokumen berdasarkan relevansinya terhadap suatu query.</p>
@@ -902,14 +902,38 @@ dalam teknik analisis teks selanjutnya, seperti perhitungan TF-IDF atau analisis
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jakarta, CNBC Indonesia-Tentara Nasional Indonesia (TNI) memiliki struktur kepangkatan yang ketat dan terorganisir dengan baik. Pangkat dalam TNI dibagi menjadi tiga golongan utama yakni Perwira, Bintara, dan Tamtama.
-TNI sendiri terdiri atas TNI Angkatan Darat (TNI AD), TNI Angkatan Udara (TNI AU), dan TNI Angkatan Laut (TNI AL) yang secara keseluruhan dipimpin oleh Panglima TNI.
-Setiap prajurit TNI diberi pangkat. Pangkat adalah keabsahan wewenang dan tanggung jawab dalam hierarki keprajuritan yang didasarkan atas kualifikasi yang telah dimiliki oleh setiap Prajurit.
-Dikutip dari Peraturan Pemerintah Nomor 39 Tahun 2010 tentang Administrasi Prajurit TNI, menurut sifatnya pangkat dibedakan atas pangkat efektif yang diberikan kepada prajurit selama menjalani Dinas Keprajuritan dan membawa akibat administrasi penuh.
-Berikut adalah penjelasan lengkap mengenai urutan pangkat dalam TNI mulai dari perwira sampai tamtama.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jakarta, CNBC Indonesia -Paus Fransiskus terpilih menjadi Paus ke-266 untuk menjadi pemimpin bagi umat Gereja Katolik dunia sekaligus kepala negara pada 13 Maret 2013.
+Saat ini Paus Fransiskus sedang melakukan perjalanan apostolikke kawasan Asia Pasifik, salah satunya ke Indonesia pada 3-6 September 2024.
+Satu hal yang disoroti dari kedatangan Paus Fransiskus ke Indonesia adalah kesederhanaan yang ditunjukkan. Misalnya saja terbang ke Indonesia dengan pesawat komersil, memakai mobil penumpang keluarga seharga Rp400 jutaan, memilih menginap di Kedutaan besar dibandingkan hotel mewah dan menggunakan arloji ratusan ribu.
+Kesederhanaan Paus pun ramai diperbincangkan oleh masyarakat Indonesia, kebanyakan kagum. Lantas siapa Paus Fransiskus, pemimpin yang sangat sederhana, dan bagaimana rekam jejaknya sebagai pemimpin salah satu agama dengan penganut terbesar di dunia?
+Jorge Mario Bergoglio atau Paus Fransiskus lahir di Buenos Aires pada 17 Desember 1936 dari keluarga imigran Italia.
+Bergoglio tumbuh dalam lingkungan yang biasa, ayahnya Mario adalah seorang akuntan di perusahaan kereta api dan ibunya, Regina Sivori, adalah seorang ibu rumah tangga yang harus membesarkan kelima anaknya.
+Ialulus sebagai teknisi kimia dan kemudian memilih jalan imamat, memasuki Seminari Keuskupan Villa Devoto. Pada 11 Maret 1958 ia memasuki novisiat Serikat Jesus atau Jesuit.
+Ia menyelesaikan studi humaniora di Chili dan kembali ke Argentina pada tahun 1963 untuk lulus dengan gelar filsafat dari Colegio de San José di San Miguel.
+Sejak tahun 1964 hingga 1965 Bergoglio mengajar sastra dan psikologi di Immaculate Conception College di Santa Fé dan pada tahun 1966 ia mengajar mata pelajaran yang sama di Colegio del Salvatore di Buenos Aires. Dari tahun 1967-70 ia belajar teologi dan memperoleh gelar dari Colegio San José.
+Pada tanggal 13 Desember 1969, ia ditahbiskan menjadi imam oleh Uskup Agung Ramón José Castellano. Kemudian iamelanjutkan pekerjaannya di sektor universitas dan dari tahun 1980 hingga 1986 menjabat sekali lagi sebagai Rektor Colegio de San José, serta pastor paroki, lagi-lagi di San Miguel.
+Kemudian, pada tanggal 20 Mei 1992, Paus Yohanes Paulus II mengangkat Bergoglio sebagai Uskup Tituler Auca dan Uskup Pembantu Buenos Aires.
+Bergoglio langsung diangkat menjadi Vikaris Episkopal distrik Flores dan pada tanggal 21 Desember 1993 juga dipercayakan dengan jabatan Vikaris Jenderal Keuskupan Agung dan pada 28 Februari 1998 diangkatsebagai Uskup Agung, Primata Argentina dan Ordinaris bagi umat beriman ritus Timur di Argentina.
+Tiga tahun kemudian pada Konsistori 21 Februari 2001, Yohanes Paulus II mengangkatnya menjadi Kardinal, memberinya gelar San Roberto Bellarmino.
+Sebagai Uskup Agung Buenos Aires, iamenggagas sebuah proyek misi yang didasarkan pada persekutuan dan evangelisasi. Ia memiliki empat tujuan utama: komunitas yang terbuka dan penuh persaudaraan, kaum awam yang terinformasi memainkan peran utama, upaya evangelisasi yang ditujukan kepada setiap penduduk kota, dan bantuan kepada orang miskin dan orang sakit.
+Paus yang memiliki nama asli Jorge Mario Bergoglio tercatat dalam sejarah terpilih sebagai Paus yang pertama dari benua Amerika dan pertama dari Ordo atau konggregasi Imam Jesuit.
+Dilansir dari The Jesuits, Ordo Jesuit sendiri merupakansebuah Ordo religius Gereja Katolik Roma yang didirikan oleh St. Ignatius dari Loyola, yang terkenal akan kedisiplinannya.
+Adapun visi Jesuit adalah &quot;Dalam visi pendiri kami, kami berupaya untuk&quot; menemukan Tuhan dalam segala hal.&quot;Kami mendedikasikan diri kami untuk &quot;kemuliaan Tuhan yang lebih besar&quot; dan kebaikan seluruh umat manusia. Dan kami berterima kasih atas kerja sama dengan pihak lain yang memiliki nilai-nilai yang sama dengan kami, termasuk orang awam. Mereka telah menjadi bagian dari &quot;kita&quot;, keluarga besar Jesuit.&quot;
+Para Jesuit memegang teguh kaul ketaatan dalam menjalankan misinya di dunia. Artinya, para Jesuit harus siap menerima misi apa pun yang diminta Paus, sebuah kaul yang mencerminkan dedikasi kita yang lebih luas terhadap Gereja universal, dan demi kebaikan semua orang dari semua agama dan budaya. Perlu diketahui, ada tiga kaul yang harus dipegang alam hidup membiara, yakni kesucian atau kemurnian, kemiskinan, dan ketaatan.
+Sebagai seorang Jesuit, Bergoglio dikenal karena gaya hidupnya yang asketik dan pendekatannya yang rendah hati. Menurut liputan BBC, setelah menjalani tugas sebagai rektor dan profesor di berbagai institusi, ia diangkat sebagai Pemimpin Provinsi Jesuit di Argentina pada 1973. Meski mengemban posisi yang tinggi, ia tetap menjaga gaya hidup sederhana, sering kali menggunakan transportasi umum dan tinggal di apartemen kecil, bahkan memasak makanannya sendiri.
+Pengangkatannya sebagai Uskup Agung Buenos Aires pada 1998 dan kemudian Kardinal pada 2001, memperkuat posisinya sebagai pemimpin yang disegani di Amerika Latin. Di tengah krisis ekonomi yang melanda Argentina pada awal 2000-an, Bergoglio menjadi suara moral yang kuat, menekankan pentingnya keadilan sosial dan kepedulian terhadap kaum miskin.
+Sebagai Paus, Fransiskus terkenal karena reformasinya yang berani dan pendekatannya yang penuh empati. Ia meninggalkan apartemen mewah Paus dan memilih tinggal di sebuah suite kecil di Wisma Vatikan.
+Ia juga menolak kemewahan lainnya, seperti menggunakan kendaraan sederhana dan menolak penggunaan istana musim panas Castel Gandolfo.
+Bahkan saat diangkat menjadi kardinal, iameminta umat beriman untuk tidak datang ke Roma untuk merayakan pengangkatannya sebagai Kardinal, tetapi lebih baik menyumbangkan apa yang akan mereka belanjakan untuk perjalanan tersebut kepada orang miskin.
+Selama masa kepemimpinannya, Paus Fransiskus menghadapi berbagai tantangan, termasuk tuduhan yang muncul terkait perannya selama masa diktator militer Argentina.
+Meski beberapa pihak menuduhnya bersekongkol dengan rezim tersebut, banyak tokoh HAM seperti Adolfo Pérez Esquivel, pemenang Nobel Perdamaian, membelanya.
+Fransiskus kerap mengkritik kapitalisme pasar bebas, menyerukan Gereja untuk meminta maaf kepada komunitas tertentu dan mengkritik pusat penahanan migran di Eropa yang ia samakan dengan kamp konsentrasi.
+Namun, di balik sikap progresifnya, Paus Fransiskus tetap mempertahankan banyak ajaran konservatif Gereja. Ia menentang pernikahan sesama jenis, menolak penahbisan imam wanita, dan dengan tegas menyebut aborsi sebagai &quot;kejahatan paling mengerikan&quot;.
+Pendekatannya yang seimbang antara tradisi dan reformasi membuatnya disukai banyak pihak, meski tidak luput dari kritik.
+Kini, di usia yang telah memasuki 80-an, muncul pertanyaan apakah Paus Fransiskus akan mengikuti jejak pendahulunya, Paus Benediktus XVI, yang mengundurkan diri sebelum wafat. Fransiskus sendiri pernah mengatakan, &quot;Saya akan melakukan hal yang sama,&quot; jika ia merasa kesehatannya tidak lagi memadai.
+Sebagai Paus, Fransiskus bukan hanya seorang pemimpin spiritual, tetapi juga simbol dari Gereja yang terus beradaptasi dengan tantangan zaman, sambil tetap menjaga akarnya yang kuat dalam ajaran iman.
 
-CNBC INDONESIA RESEARCH
-[email protected]
+CNBC INDONESIA RESEARCH[email protected]
 </pre></div>
 </div>
 </div>
@@ -921,7 +945,7 @@ CNBC INDONESIA RESEARCH
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>jakarta cnbc indonesia tentara nasional indonesia tni milik struktur pangkat ketat organisir pangkat tni bagi golong utama perwira bintara tamtama tni tni angkat darat tni ad tni angkat udara tni au tni angkat laut tni al pimpin panglima tni prajurit tni pangkat pangkat absah wewenang tanggung hierarki prajurit dasar kualifikasi milik prajurit kutip atur perintah nomor administrasi prajurit tni sifat pangkat beda pangkat efektif prajurit jalan dinas prajurit bawa akibat administrasi penuh jelas lengkap urut pangkat tni perwira tamtama cnbc indonesia research email protected
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>jakarta cnbc indonesia paus fransiskus pilih paus pimpin umat gereja katolik dunia kepala negara maret paus fransiskus jalan apostolikke kawasan asia pasifik salah satu indonesia september sorot datang paus fransiskus indonesia sederhana terbang indonesia pesawat komersil pakai mobil tumpang keluarga harga rp juta pilih inap duta banding hotel mewah arloji ratus ribu sederhana paus ramai bincang masyarakat indonesia banyak kagum lantas paus fransiskus pimpin sederhana rekam jejak pimpin salah agama anut besar dunia jorge mario bergoglio paus fransiskus lahir buenos aires desember keluarga imigran italia bergoglio tumbuh lingkung ayah mario akuntan usaha kereta api ibu regina sivori rumah tangga besar anak ialulus teknisi kimia pilih jalan imamat pasuk seminari uskup villa devoto maret pasuk novisiat serikat jesus jesuit selesai studi humaniora chili argentina lulus gelar filsafat colegio de san jos san miguel bergoglio ajar sastra psikologi immaculate conception college santa f ajar mata ajar colegio del salvatore buenos aires ajar teologi oleh gelar colegio san jos tanggal desember tahbis imam uskup agung ramn jos castellano iamelanjutkan kerja sektor universitas jabat rektor colegio de san jos pastor paroki san miguel tanggal mei paus yohanes paulus ii angkat bergoglio uskup tituler auca uskup bantu buenos aires bergoglio langsung angkat vikaris episkopal distrik flores tanggal desember percaya jabat vikaris jenderal uskup agung februari diangkatsebagai uskup agung primata argentina ordinaris umat iman ritus timur argentina konsistori februari yohanes paulus ii angkat kardinal beri gelar san roberto bellarmino uskup agung buenos aires iamenggagas proyek misi dasar sekutu evangelisasi milik tuju utama komunitas buka penuh saudara kaum awam informasi main peran utama upaya evangelisasi duduk kota bantu orang miskin orang sakit paus milik nama asli jorge mario bergoglio catat sejarah pilih paus benua amerika ordo konggregasi imam jesuit lansir the jesuits ordo jesuit merupakansebuah ordo religius gereja katolik roma diri st ignatius loyola kenal disiplin visi jesuit visi diri upaya temu tuhan dedikasi mulia tuhan baik umat manusia terima kasih kerja milik nilai nilai orang awam keluarga jesuit jesuit pegang teguh kaul taat jalan misi dunia jesuit terima misi paus kaul cermin dedikasi luas gereja universal baik orang agama budaya kaul pegang alam hidup biara suci murni miskin taat jesuit bergoglio kenal gaya hidup asketik dekat rendah hati liput bbc jalan tugas rektor profesor institusi angkat pimpin provinsi jesuit argentina emban posisi jaga gaya hidup sederhana kali transportasi tinggal apartemen masak makan angkat uskup agung buenos aires kardinal kuat posisi pimpin segani amerika latin krisis ekonomi landa argentina an bergoglio suara moral kuat tekan adil sosial peduli kaum miskin paus fransiskus kenal reformasi berani dekat penuh empati tinggal apartemen mewah paus pilih tinggal suite wisma vatikan tolak mewah kendara sederhana tolak guna istana musim panas castel gandolfo angkat kardinal iameminta umat iman roma raya angkat kardinal sumbang belanja jalan orang miskin pimpin paus fransiskus hadap tantang tuduh muncul kait peran diktator militer argentina tuduh sekongkol rezim tokoh ham adolfo prez esquivel menang nobel damai bela fransiskus kerap kritik kapitalisme pasar bebas seru gereja maaf komunitas kritik pusat tahan migran eropa sama kamp konsentrasi sikap progresif paus fransiskus tahan ajar konservatif gereja tentang nikah jenis tolak tahbis imam wanita sebut aborsi jahat keri dekat imbang tradisi reformasi buat suka luput kritik usia pasuk an muncul paus fransiskus ikut jejak dahulu paus benediktus xvi undur wafat fransiskus sehat pada paus fransiskus pimpin spiritual simbol gereja adaptasi tantang zaman jaga akar kuat ajar iman cnbc indonesia research email protected
 </pre></div>
 </div>
 </div>
@@ -1060,29 +1084,12 @@ CNBC INDONESIA RESEARCH
 <span class="g g-Whitespace">    </span><span class="mi">111</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_word</span><span class="p">):</span>
 <span class="g g-Whitespace">    </span><span class="mi">112</span>         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_word</span>
 
-<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:97,</span> in <span class="ni">Context.accept</span><span class="nt">(self, visitor)</span>
-<span class="g g-Whitespace">     </span><span class="mi">96</span> <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitor</span><span class="p">):</span>
-<span class="ne">---&gt; </span><span class="mi">97</span>     <span class="n">visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-
-<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Visitor\AbstractDisambiguatePrefixRule.py:14,</span> in <span class="ni">AbstractDisambiguatePrefixRule.visit</span><span class="nt">(self, context)</span>
-<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="k">for</span> <span class="n">disambiguator</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">disambiguators</span><span class="p">:</span>
-<span class="ne">---&gt; </span><span class="mi">14</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">disambiguator</span><span class="o">.</span><span class="n">disambiguate</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">current_word</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">dictionary</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">result</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span>         <span class="k">break</span>
-
-<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Morphology\Disambiguator\DisambiguatorPrefixRule18.py:22,</span> in <span class="ni">DisambiguatorPrefixRule18b.disambiguate</span><span class="nt">(self, word)</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="k">class</span> <span class="nc">DisambiguatorPrefixRule18b</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">17</span><span class="w">     </span><span class="sd">&quot;&quot;&quot;Disambiguate Prefix Rule 18a</span>
-<span class="g g-Whitespace">     </span><span class="mi">18</span><span class="sd">     Original Rule 18 : menyV -&gt; meny-sV</span>
-<span class="g g-Whitespace">     </span><span class="mi">19</span><span class="sd">     Modified by CC (shifted into 18b, see also 18a)</span>
-<span class="g g-Whitespace">     </span><span class="mi">20</span><span class="sd">     &quot;&quot;&quot;</span>
-<span class="ne">---&gt; </span><span class="mi">22</span>     <span class="k">def</span> <span class="nf">disambiguate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">):</span>
-<span class="g g-Whitespace">     </span><span class="mi">23</span><span class="w">         </span><span class="sd">&quot;&quot;&quot;Disambiguate Prefix Rule 18a</span>
-<span class="g g-Whitespace">     </span><span class="mi">24</span><span class="sd">         Original Rule 18 : menyV -&gt; meny-sV</span>
-<span class="g g-Whitespace">     </span><span class="mi">25</span><span class="sd">         Modified by CC (shifted into 18b, see also 18a)</span>
-<span class="g g-Whitespace">     </span><span class="mi">26</span><span class="sd">         &quot;&quot;&quot;</span>
-<span class="g g-Whitespace">     </span><span class="mi">27</span>         <span class="n">matches</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^meny([aiueo])(.*)$&#39;</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
+<span class="nn">File C:\Program Files\Python311\Lib\site-packages\Sastrawi\Stemmer\Context\Context.py:96,</span> in <span class="ni">Context.accept</span><span class="nt">(self, visitor)</span>
+<span class="g g-Whitespace">     </span><span class="mi">93</span> <span class="k">def</span> <span class="nf">remove_suffixes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">94</span>     <span class="bp">self</span><span class="o">.</span><span class="n">accept_visitors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">suffix_visitors</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">96</span> <span class="k">def</span> <span class="nf">accept</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitor</span><span class="p">):</span>
+<span class="g g-Whitespace">     </span><span class="mi">97</span>     <span class="n">visitor</span><span class="o">.</span><span class="n">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">99</span> <span class="k">def</span> <span class="nf">accept_visitors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">visitors</span><span class="p">):</span>
 
 <span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
@@ -2341,7 +2348,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Crawling Web Berita CNBC Indonesia</p>
+        <p class="prev-next-title">1. Crawling Web Berita CNBC Indonesia</p>
       </div>
     </a>
     <a class="right-next"
@@ -2349,7 +2356,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression</p>
+        <p class="prev-next-title">3. Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

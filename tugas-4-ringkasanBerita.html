@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Ringkasan Berita &#8212; PPW</title>
+    <title>4. Ringkasan Berita &#8212; PPW</title>
   
   
   
@@ -62,8 +62,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'tugas-4-ringkasanBerita';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Kata Kunci Berita" href="tugas-5-keyword-extraction.html" />
-    <link rel="prev" title="Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression" href="tugas-3-logit.html" />
+    <link rel="next" title="5. Kata Kunci Berita" href="tugas-5-keyword-extraction.html" />
+    <link rel="prev" title="3. Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression" href="tugas-3-logit.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -176,11 +176,11 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="tugas-1-crawling.html">Crawling Web Berita CNBC Indonesia</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tugas-2-vsm.html">Modelling Vector Space Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tugas-3-logit.html">Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Ringkasan Berita</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tugas-5-keyword-extraction.html">Kata Kunci Berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tugas-1-crawling.html">1. Crawling Web Berita CNBC Indonesia</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tugas-2-vsm.html">2. Modelling Vector Space Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tugas-3-logit.html">3. Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. Ringkasan Berita</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tugas-5-keyword-extraction.html">5. Kata Kunci Berita</a></li>
 </ul>
 
     </div>
@@ -366,7 +366,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Ringkasan Berita</h1>
+    <h1>4. Ringkasan Berita</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -421,7 +421,13 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Ringkasan Berita</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#page-rank">Page Rank</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#page-rank">Page Rank</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-kerja-pagerank">Cara Kerja PageRank</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ilustrasi-sederhana">Ilustrasi Sederhana</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pagerank-dalam-konteks-mesin-pencari">PageRank dalam Konteks Mesin Pencari</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#faktor-peluruhan-damping-factor">Faktor Peluruhan (Damping Factor)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-sederhana-perhitungan-pagerank">Contoh Sederhana Perhitungan PageRank</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Kesimpulan</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-ringkasan">Hasil Ringkasan</a></li>
 </ul>
 </li>
@@ -439,7 +445,7 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="ringkasan-berita">
-<h1>Ringkasan Berita<a class="headerlink" href="#ringkasan-berita" title="Link to this heading">#</a></h1>
+<h1>4. Ringkasan Berita<a class="headerlink" href="#ringkasan-berita" title="Link to this heading">#</a></h1>
 <p>Ringkasan berita digunakan untuk mempermudah ketika ingin mengetahui isi berita secara jelas dan ringkas</p>
 <section id="proses-pembersihan-teks">
 <h2>Proses Pembersihan Teks<a class="headerlink" href="#proses-pembersihan-teks" title="Link to this heading">#</a></h2>
@@ -610,19 +616,19 @@ document.write(`
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                                                      | 0/100 [00:00&lt;?, ?it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 18%|██████████▊                                                 | 18/100 [00:00&lt;00:00, 174.16it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 10%|██████                                                       | 10/100 [00:00&lt;00:00, 99.50it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 41%|████████████████████████▌                                   | 41/100 [00:00&lt;00:00, 201.08it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 35%|█████████████████████                                       | 35/100 [00:00&lt;00:00, 182.28it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 63%|█████████████████████████████████████▊                      | 63/100 [00:00&lt;00:00, 205.99it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 54%|████████████████████████████████▍                           | 54/100 [00:00&lt;00:00, 181.58it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 96%|█████████████████████████████████████████████████████████▌  | 96/100 [00:00&lt;00:00, 252.84it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 86%|███████████████████████████████████████████████████▌        | 86/100 [00:00&lt;00:00, 233.99it/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|███████████████████████████████████████████████████████████| 100/100 [00:00&lt;00:00, 233.38it/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|███████████████████████████████████████████████████████████| 100/100 [00:00&lt;00:00, 218.19it/s]
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -2366,7 +2372,7 @@ $<span class="math notranslate nohighlight">\(
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/42f9dcd4c94e02c9eac6c4e6a50fea617e5d29107fcb69e7aace45f3f0ee09df.png" src="_images/42f9dcd4c94e02c9eac6c4e6a50fea617e5d29107fcb69e7aace45f3f0ee09df.png" />
+<img alt="_images/15c852a1990cf09088e5333a29990af0b092f28d13bd330fd8c39419cc08ebaa.png" src="_images/15c852a1990cf09088e5333a29990af0b092f28d13bd330fd8c39419cc08ebaa.png" />
 </div>
 </div>
 </section>
@@ -2505,12 +2511,75 @@ Kalimat: Hierarki Gereja Katolik terdiri dari Paus sebagai pemimpin tertinggi, p
 <h3>Page Rank<a class="headerlink" href="#page-rank" title="Link to this heading">#</a></h3>
 <p>Dalam konteks ini, dokumen dianggap sebagai “halaman” yang terhubung oleh hubungan yang merefleksikan keterkaitan atau relevansinya. Dengan menerapkan konsep PageRank, dokumen yang dianggap lebih “penting” atau relevan dapat diberikan skor lebih tinggi. Penggunaan faktor damping, serupa dengan dalam algoritma PageRank, dapat membantu mengontrol sejauh mana pengaruh satu dokumen terhadap yang lain. Dengan memberikan skor pada dokumen berdasarkan hubungan mereka dalam jaringan informasi, kita dapat menghasilkan ringkasan yang mencerminkan tingkat relevansi dan pentingnya masing-masing dokumen dalam konteks keseluruhan.</p>
 <div class="math notranslate nohighlight">
-\[PR_i = \frac{1-d}{n} + d \sum_{P_j\in\{1 \dots,n\}} \frac{PR_i}{L_j}\]</div>
-<p>Keterangan:</p>
-<p><span class="math notranslate nohighlight">\(PR(i)\)</span> = adalah PageRank dari halaman web ke i.<br>
-<span class="math notranslate nohighlight">\(d\)</span> = adalah faktor redaman, biasanya diatur sebesar 0,85, yang digunakan untuk menghitung probabilitas bahwa peramban acak akan “melompat” ke halaman acak dan tidak mengikuti sebuah link.<br>
-<span class="math notranslate nohighlight">\(PR(i)\)</span> = adalah PageRank halaman ke i, yaitu halaman yang memiliki sambungan yang mengarah ke halaman i.<br>
-<span class="math notranslate nohighlight">\(L(c)\)</span> = adalah jumlah hubungan keluar pada halaman j.</p>
+\[
+PR(i) = \frac{1 - d}{N} + d \sum_{j \in M(i)} \frac{PR(j)}{L(j)}
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\((N)\)</span>: Jumlah total halaman dalam graf web.</p></li>
+<li><p><span class="math notranslate nohighlight">\((d)\)</span>: Faktor peluruhan (damping factor), biasanya bernilai 0.85. Ini mewakili probabilitas bahwa seorang pengguna akan mengikuti tautan secara acak. (1 - (d)) mewakili probabilitas bahwa pengguna akan mengunjungi halaman secara acak.</p></li>
+<li><p><span class="math notranslate nohighlight">\((M(i))\)</span>: Kumpulan halaman yang menautkan ke halaman (i).</p></li>
+<li><p><span class="math notranslate nohighlight">\((PR(j))\)</span>: PageRank halaman (j) yang menautkan ke halaman (i).</p></li>
+<li><p><span class="math notranslate nohighlight">\((L(j))\)</span>: Jumlah total tautan keluar dari halaman (j).</p></li>
+</ul>
+<p>Algoritma PageRank juga memperhitungkan dua faktor penting:</p>
+<ol class="arabic simple">
+<li><p><strong>Inbound Links</strong>: Halaman yang memiliki lebih banyak tautan yang masuk (inbound links) dari halaman lain dianggap lebih penting.</p></li>
+<li><p><strong>Outbound Links</strong>: Bobot yang diberikan oleh satu halaman ke halaman lain terbagi secara merata di antara semua tautan keluar (outbound links) dari halaman tersebut.</p></li>
+</ol>
+</section>
+<section id="cara-kerja-pagerank">
+<h3>Cara Kerja PageRank<a class="headerlink" href="#cara-kerja-pagerank" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Pada awalnya, semua halaman diberikan nilai PageRank yang sama, yaitu <span class="math notranslate nohighlight">\(( \frac{1}{N} )\)</span>, di mana (N) adalah jumlah total halaman.</p></li>
+<li><p>PageRank kemudian diperbarui secara iteratif berdasarkan rumus di atas.</p></li>
+<li><p>Nilai PageRank dari suatu halaman didistribusikan ke semua halaman lain yang terhubung dengannya melalui tautan keluar.</p></li>
+<li><p>Setelah beberapa iterasi, nilai PageRank untuk setiap halaman akan stabil dan tidak berubah lagi (konvergen).</p></li>
+</ol>
+</section>
+<section id="ilustrasi-sederhana">
+<h3>Ilustrasi Sederhana<a class="headerlink" href="#ilustrasi-sederhana" title="Link to this heading">#</a></h3>
+<p>Misalkan kita memiliki tiga halaman web: (A), (B), dan (C).</p>
+<ul class="simple">
+<li><p>(A) menautkan ke (B) dan (C).</p></li>
+<li><p>(B) menautkan ke (C).</p></li>
+<li><p>(C) menautkan ke (A).</p></li>
+</ul>
+<p><strong>Langkah-langkah Iterasi Awal PageRank:</strong></p>
+<ol class="arabic simple">
+<li><p>Semua halaman memulai dengan nilai PageRank yang sama: (PR(A) = PR(B) = PR(C) = <span class="math notranslate nohighlight">\(\frac{1}{3}\)</span>).</p></li>
+<li><p>Kemudian, kita menghitung nilai PageRank baru menggunakan rumus di atas, dengan memperbarui setiap halaman berdasarkan jumlah tautan yang diterima dari halaman lain.</p></li>
+</ol>
+<p>Misalnya, jika (A) menautkan ke (B) dan (C), PageRank yang diterima oleh (B) dan (C) adalah sebagian dari PageRank (A).</p>
+</section>
+<section id="pagerank-dalam-konteks-mesin-pencari">
+<h3>PageRank dalam Konteks Mesin Pencari<a class="headerlink" href="#pagerank-dalam-konteks-mesin-pencari" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>PageRank membantu mesin pencari menentukan halaman mana yang lebih relevan atau penting dalam jaringan web yang besar.</p></li>
+<li><p>Halaman dengan PageRank tinggi dianggap lebih penting dan sering kali muncul lebih tinggi dalam hasil pencarian.</p></li>
+</ul>
+</section>
+<section id="faktor-peluruhan-damping-factor">
+<h3>Faktor Peluruhan (Damping Factor)<a class="headerlink" href="#faktor-peluruhan-damping-factor" title="Link to this heading">#</a></h3>
+<p>PageRank menggunakan faktor peluruhan untuk mensimulasikan perilaku pengguna yang kadang-kadang berhenti mengikuti tautan dan memulai pencarian baru dari halaman acak. Nilai <strong>(d)</strong> biasanya diatur menjadi 0.85, artinya ada peluang 85% bahwa pengguna akan mengikuti tautan dan 15% bahwa pengguna akan memulai pencarian dari halaman lain.</p>
+</section>
+<section id="contoh-sederhana-perhitungan-pagerank">
+<h3>Contoh Sederhana Perhitungan PageRank<a class="headerlink" href="#contoh-sederhana-perhitungan-pagerank" title="Link to this heading">#</a></h3>
+<p>Misalkan ada 3 halaman (A), (B), dan (C), dengan hubungan tautan seperti ini:</p>
+<ul class="simple">
+<li><p>(A) menautkan ke (B) dan (C).</p></li>
+<li><p>(B) menautkan ke (C).</p></li>
+<li><p>(C) menautkan ke (A).</p></li>
+</ul>
+<p>Maka, kita dapat menghitung PageRank untuk masing-masing halaman secara iteratif menggunakan rumus:</p>
+<ul class="simple">
+<li><p>(PR(A)) akan dipengaruhi oleh (PR(C)), karena (C) menautkan ke (A).</p></li>
+<li><p>(PR(B)) akan dipengaruhi oleh (PR(A)), karena (A) menautkan ke (B).</p></li>
+<li><p>(PR(C)) akan dipengaruhi oleh (PR(A)) dan (PR(B)), karena (A) dan (B) menautkan ke (C).</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Kesimpulan<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>PageRank menghitung pentingnya halaman berdasarkan jumlah dan kualitas tautan yang mengarah ke halaman tersebut. Semakin banyak halaman penting yang menautkan ke halaman lain, semakin tinggi PageRank-nya. Algoritma ini penting dalam dunia pencarian web dan memiliki pengaruh besar pada peringkat halaman dalam hasil pencarian Google.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pagerank_preprocessing</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">pagerank</span><span class="p">(</span><span class="n">G_preprocessing</span><span class="p">)</span>
@@ -2622,7 +2691,7 @@ Kalimat: Paus, yang meneruskan Santo Petrus sebagai pemimpin para uskup, adalah
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression</p>
+        <p class="prev-next-title">3. Implementasi VSM TF-IDF menggunakan Klasifikasi Logistic Regression</p>
       </div>
     </a>
     <a class="right-next"
@@ -2630,7 +2699,7 @@ Kalimat: Paus, yang meneruskan Santo Petrus sebagai pemimpin para uskup, adalah
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Kata Kunci Berita</p>
+        <p class="prev-next-title">5. Kata Kunci Berita</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -2695,7 +2764,13 @@ Kalimat: Paus, yang meneruskan Santo Petrus sebagai pemimpin para uskup, adalah
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Ringkasan Berita</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#page-rank">Page Rank</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#page-rank">Page Rank</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cara-kerja-pagerank">Cara Kerja PageRank</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ilustrasi-sederhana">Ilustrasi Sederhana</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pagerank-dalam-konteks-mesin-pencari">PageRank dalam Konteks Mesin Pencari</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#faktor-peluruhan-damping-factor">Faktor Peluruhan (Damping Factor)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contoh-sederhana-perhitungan-pagerank">Contoh Sederhana Perhitungan PageRank</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Kesimpulan</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-ringkasan">Hasil Ringkasan</a></li>
 </ul>
 </li>
